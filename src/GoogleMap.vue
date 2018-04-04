@@ -1,12 +1,45 @@
 <template>
+  <div>
   <div class="google-map" id="gmap"></div>
+  </div>
 </template>
 
 <script>
   export default{
+    data(){
+      return{
+        marker_completed: './assets/marker_completed.png',
+        marker_uncompleted: './assets/marker_uncompleted.png',
+        markersInfo: [{
+          position: new google.maps.LatLng(-33.91721, 151.22630),
+          title: 'prvo',
+          completed: 1
+        }, {
+          position: new google.maps.LatLng(-33.91539, 151.22820),
+          title: 'vtoro',
+          completed: 0
+        }, {
+          position: new google.maps.LatLng(-33.91747, 151.22912),
+          title: 'treto',
+          completed: 1
+        }, {
+          position: new google.maps.LatLng(-33.91910, 151.22907),
+          title: 'cetvrto',
+          completed: 0
+        }],
+        map: null,
+        markers: [],
+        locations: []
+      }
+    },
     mounted(){
 
-      const map = new google.maps.Map(document.getElementById('gmap'), {
+      this.axios.get('http://127.0.0.1:8000/2/locations')
+        .then((response) => {
+          console.log(response.data)
+        })
+
+      this.map = new google.maps.Map(document.getElementById('gmap'), {
         zoom: 16,
         center: new google.maps.LatLng(-33.91722, 151.23064),
         disableDefaultUI: true,
@@ -208,8 +241,49 @@
         ]
       });
 
+      // MARKERS
+
+      this.markersInfo.forEach( (feature) => {
+
+        //kontent za popup
+//        let title = feature.title;
+//        let contentString = title + '<button>Edit</button>' + '<button>Delete</button>';
+
+        if(feature.completed){
+          const marker = new google.maps.Marker({
+            position: feature.position,
+            map: this.map,
+            //icon: this.marker_completed
+          });
+          this.markers.push(marker);
+        }
+        else{
+          const marker = new google.maps.Marker({
+            position: feature.position,
+            map: this.map,
+            //icon: this.marker_uncompleted
+          });
+          this.markers.push(marker);
+
+          google.maps.event.addListener(marker, 'click', function() {
+            //hideAllInfoWindows(map);
+            this.infowindow.open(map, this);
+          });
+        }
+
+//        marker.infowindow = new google.maps.InfoWindow({
+//          content: contentString
+//        });
+
+
+
+//        google.maps.event.addListener(marker, 'click', function() {
+//          hideAllInfoWindows(map);
+//          this.infowindow.open(map, this);
+//        });
+      });
     }
-}
+  }
 </script>
 
 <style>

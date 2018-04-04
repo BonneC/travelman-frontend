@@ -1,7 +1,8 @@
 <template>
   <div id="app">
-    <app-gmap></app-gmap>
-    <app-search></app-search>
+    <app-navbar></app-navbar>
+    <!--<app-gmap></app-gmap>-->
+    <!--<app-search></app-search>-->
     <router-view></router-view>
   </div>
 </template>

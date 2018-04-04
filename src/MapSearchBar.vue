@@ -1,15 +1,18 @@
 <template>
+  <div>
     <input id="searchTextField"
-           ref="autocomplete"
-           type="text"
-           size="50"
-           placeholder="Enter a location"
-           autocomplete="on"/>
+              ref="autocomplete"
+              type="text"
+              size="50"
+              placeholder="Enter a location"
+              autocomplete="on"/>
+    <button>New</button>
+  </div>
 </template>
 
 <script>
   export default {
-    mounted(){
+    mounted() {
       let options = {
         types: ['(cities)']
       };
