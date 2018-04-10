@@ -18,6 +18,7 @@
           <ul class="nav navbar-nav navbar-right">
             <li><router-link to="/">Home</router-link></li>
             <li><router-link to="/join">Sign up</router-link></li>
+            <li><router-link to="/login">Sign In</router-link></li>
             <li><router-link to="/user">Username</router-link></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></a>

@@ -12,6 +12,7 @@ import Navbar from './Navbar'
 import Home from './Home'
 import UserSignup from './users/UserSignup'
 import UserProfile from './users/UserProfile'
+import UserLogin from './users/UserLogin'
 
 Vue.config.productionTip = false
 
@@ -21,7 +22,8 @@ Vue.use(VueAxios, axios)
 const routes = [
   { path: '/', component: Home},
   { path: '/join', component: UserSignup},
-  { path: '/user', component: UserProfile}
+  { path: '/user', component: UserProfile},
+  { path: '/login', component: UserLogin}
 ]
 
 const router = new VueRouter({

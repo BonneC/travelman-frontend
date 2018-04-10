@@ -1,17 +1,25 @@
 <template>
   <div>
     <input id="searchTextField"
+           v-model="location"
               ref="autocomplete"
               type="text"
               size="50"
               placeholder="Enter a location"
               autocomplete="on"/>
-    <button>New</button>
+    <button v-on:click="">New</button>
   </div>
 </template>
 
+
+
 <script>
   export default {
+    data(){
+      return{
+        location: ""
+      }
+    },
     mounted() {
       let options = {
         types: ['(cities)']

@@ -9,37 +9,34 @@
           <div class="row">
             <div class="col-xs-12 col-sm-6 col-md-6">
               <div class="form-group">
-                <input type="text" name="first_name" id="first_name" class="form-control input-lg" placeholder="First Name" tabindex="1">
+                <input type="text" v-model.lazy="userData.firstName" name="first_name" id="first_name" class="form-control input-lg" placeholder="First Name" tabindex="1">
               </div>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-6">
               <div class="form-group">
-                <input type="text" name="last_name" id="last_name" class="form-control input-lg" placeholder="Last Name" tabindex="2">
+                <input type="text" v-model.lazy="userData.lastName" name="last_name" id="last_name" class="form-control input-lg" placeholder="Last Name" tabindex="2">
               </div>
             </div>
           </div>
           <div class="form-group">
-            <input type="text" name="display_name" id="display_name" class="form-control input-lg" placeholder="Display Name" tabindex="3">
-          </div>
-          <div class="form-group">
-            <input type="email" name="email" id="email" class="form-control input-lg" placeholder="Email Address" tabindex="4">
+            <input type="email" v-model="userData.email" name="email" id="email" class="form-control input-lg" placeholder="Email Address" tabindex="3">
           </div>
           <div class="row">
             <div class="col-xs-12 col-sm-6 col-md-6">
               <div class="form-group">
-                <input type="password" name="password" id="password" class="form-control input-lg" placeholder="Password" tabindex="5">
+                <input type="password" v-model="userData.password" name="password" id="password" class="form-control input-lg" placeholder="Password" tabindex="4">
               </div>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-6">
               <div class="form-group">
-                <input type="password" name="password_confirmation" id="password_confirmation" class="form-control input-lg" placeholder="Confirm Password" tabindex="6">
+                <input type="password" name="password_confirmation" id="password_confirmation" class="form-control input-lg" placeholder="Confirm Password" tabindex="5">
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col-xs-4 col-sm-3 col-md-3">
 					<span class="button-checkbox">
-						<button type="button" class="btn" data-color="info" tabindex="7">I Agree</button>
+						<button type="button" class="btn" data-color="info" tabindex="6">I Agree</button>
                         <input type="checkbox" name="t_and_c" id="t_and_c" class="hidden" value="1">
 					</span>
             </div>
@@ -59,3 +56,23 @@
 
   </div>
 </template>
+
+<script>
+  export default {
+    data(){
+      return {
+        userData:{
+          firstName: '',
+          lastName: '',
+          email: '',
+          password: '',
+        }
+
+      }
+    }
+  }
+</script>
+
+<style>
+
+</style>
