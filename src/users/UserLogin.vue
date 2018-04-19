@@ -11,18 +11,18 @@
              required>
       <div class="checkbox">
         <label>
-          <input type="checkbox" v-model="userData.remember" value="remember-me"> Remember me
+          <!--<input type="checkbox" v-model="userData.remember" value="rememberMe"> Remember me-->
         </label>
         <label>
-          <input type="checkbox" v-model="userData.remember" value="remember-pass"> Remember password
+          <!--<input type="checkbox" v-model="userData.remember" value="rememberPass"> Remember password-->
         </label>
       </div>
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+      <button class="btn btn-lg btn-primary btn-block"
+              type="submit" @click.prevent="onSubmit">Sign in
+      </button>
     </form>
 
-    <ul>
-      <li v-for="item in userData.remember">{{ item }}</li>
-    </ul>
+    <p>{{isSubmitted}}</p>
   </div>
 </template>
 
@@ -33,8 +33,16 @@
         userData: {
           email: '',
           password: '',
-          remember: []
-        }
+          //remember: []
+        },
+        isSubmitted: false
+      }
+    },
+    methods: {
+      onSubmit() {
+        this.isSubmitted = true;
+        this.$store.dispatch('login', this.userData)
+
       }
     }
   }
