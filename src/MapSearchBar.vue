@@ -2,21 +2,20 @@
   <div>
     <input id="searchTextField"
            v-model="location"
-              ref="autocomplete"
-              type="text"
-              size="50"
-              placeholder="Enter a location"
-              autocomplete="on"/>
+           ref="autocomplete"
+           type="text"
+           size="50"
+           placeholder="Enter a location"
+           autocomplete="on"/>
     <button v-on:click="">New</button>
   </div>
 </template>
 
 
-
 <script>
   export default {
-    data(){
-      return{
+    data() {
+      return {
         location: ""
       }
     },

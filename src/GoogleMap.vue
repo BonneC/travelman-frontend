@@ -1,13 +1,13 @@
 <template>
   <div>
-  <div class="google-map" id="gmap"></div>
+    <div class="google-map" id="gmap"></div>
   </div>
 </template>
 
 <script>
-  export default{
-    data(){
-      return{
+  export default {
+    data() {
+      return {
         marker_completed: './assets/marker_completed.png',
         marker_uncompleted: './assets/marker_uncompleted.png',
         markersInfo: [{
@@ -32,7 +32,7 @@
         locations: []
       }
     },
-    mounted(){
+    mounted() {
 
       this.axios.get('http://127.0.0.1:8000/2/locations')
         .then((response) => {
@@ -243,13 +243,13 @@
 
       // MARKERS
 
-      this.markersInfo.forEach( (feature) => {
+      this.markersInfo.forEach((feature) => {
 
         //kontent za popup
 //        let title = feature.title;
 //        let contentString = title + '<button>Edit</button>' + '<button>Delete</button>';
 
-        if(feature.completed){
+        if (feature.completed) {
           const marker = new google.maps.Marker({
             position: feature.position,
             map: this.map,
@@ -257,7 +257,7 @@
           });
           this.markers.push(marker);
         }
-        else{
+        else {
           const marker = new google.maps.Marker({
             position: feature.position,
             map: this.map,
@@ -265,7 +265,7 @@
           });
           this.markers.push(marker);
 
-          google.maps.event.addListener(marker, 'click', function() {
+          google.maps.event.addListener(marker, 'click', function () {
             //hideAllInfoWindows(map);
             this.infowindow.open(map, this);
           });
@@ -274,7 +274,6 @@
 //        marker.infowindow = new google.maps.InfoWindow({
 //          content: contentString
 //        });
-
 
 
 //        google.maps.event.addListener(marker, 'click', function() {
