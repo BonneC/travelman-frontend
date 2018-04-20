@@ -14,7 +14,7 @@ export const store = new Vuex.Store({
   },
   mutations: {
     authUser(state, userData) {
-      state.idToken = userData.access_token
+      state.idToken = userData.token;
       //state.userId = userData.userId
     }
 
@@ -32,7 +32,8 @@ export const store = new Vuex.Store({
       axios.post('http://127.0.0.1:8000/auth/login', authData)
         .then((response) => {
           console.log(response);
-          commit('authUser', {token: response.data.acess_token})
+          commit('authUser', {token: response.data.access_token});
+
         })
         .catch(error => console.log(error))
     }
