@@ -1,6 +1,7 @@
 <template>
   <div>
     <div class="google-map" id="gmap"></div>
+    <modal name="edit-location" @before-open="beforeOpen">Hello</modal>
   </div>
 </template>
 
@@ -249,38 +250,50 @@
 //        let title = feature.title;
 //        let contentString = title + '<button>Edit</button>' + '<button>Delete</button>';
 
+        let marker = null;
+
         if (feature.completed) {
-          const marker = new google.maps.Marker({
+          marker = new google.maps.Marker({
             position: feature.position,
             map: this.map,
             //icon: this.marker_completed
           });
-          this.markers.push(marker);
+          //this.markers.push(marker);
         }
         else {
-          const marker = new google.maps.Marker({
+          marker = new google.maps.Marker({
             position: feature.position,
             map: this.map,
             //icon: this.marker_uncompleted
           });
-          this.markers.push(marker);
-
-          google.maps.event.addListener(marker, 'click', function () {
-            //hideAllInfoWindows(map);
-            this.infowindow.open(map, this);
-          });
+//          this.markers.push(marker);
+//
+//          let that = this;
+//
+//          google.maps.event.addListener(marker, 'click', function () {
+//              that.show()
+//          });
         }
+        this.markers.push(marker);
 
-//        marker.infowindow = new google.maps.InfoWindow({
-//          content: contentString
-//        });
+        let that = this;
 
+        google.maps.event.addListener(marker, 'click', function () {
+          that.show()
+        });
 
-//        google.maps.event.addListener(marker, 'click', function() {
-//          hideAllInfoWindows(map);
-//          this.infowindow.open(map, this);
-//        });
       });
+    },
+    methods:{
+      show() {
+        this.$modal.show('edit-location');
+      },
+      hide(){
+        this.$modal.hide('edit-location');
+      },
+      beforeOpen (event) {
+        console.log(event);
+      }
     }
   }
 </script>

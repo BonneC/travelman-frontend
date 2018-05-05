@@ -38,7 +38,7 @@
                 <li><a href="#">Something else here</a></li>
                 <li role="separator" class="divider"></li>
                 <li>
-                  <button @click="onLogout">Log out</button>
+                  <a href="#" @click="onLogout">Log out</a>
                 </li>
               </ul>
             </li>

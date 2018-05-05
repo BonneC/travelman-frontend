@@ -9,26 +9,17 @@ import router from './router'
 
 
 import {store} from './store'
+import VModal from 'vue-js-modal'
 
-Vue.config.productionTip = false
 
-// Vue.use(VueRouter)
-//
-//
-// const routes = [
-//   {path: '/', component: Home},
-//   {path: '/join', component: UserSignup},
-//   {path: '/user', component: UserProfile},
-//   {path: '/login', component: UserLogin}
-// ]
-//
-// const router = new VueRouter({
-//   routes
-// })
+Vue.config.productionTip = false;
 
-Vue.component('app-navbar', Navbar)
-Vue.component('app-gmap', GoogleMap)
-Vue.component('app-search', MapSearchBar)
+Vue.use(VModal);
+
+Vue.component('app-navbar', Navbar);
+Vue.component('app-gmap', GoogleMap);
+Vue.component('app-search', MapSearchBar);
+
 
 /* eslint-disable no-new */
 new Vue({
@@ -36,5 +27,6 @@ new Vue({
   router,
   store,
   components: {App},
-  template: '<App/>'
-})
+  template: '<App/>',
+
+});
