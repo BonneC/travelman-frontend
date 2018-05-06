@@ -32,8 +32,8 @@ export default {
     return {
       userData: {
         email: '',
-        password: '',
-        //remember: []
+        password: ''
+        // remember: []
       },
       isSubmitted: false
     }
@@ -42,7 +42,6 @@ export default {
     onSubmit () {
       this.isSubmitted = true
       this.$store.dispatch('login', this.userData)
-
     }
   }
 }

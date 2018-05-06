@@ -41,7 +41,6 @@
             </div>
           </div>
 
-
           <hr class="colorgraph">
           <div class="row">
             <div class="col-xs-12 col-md-12">
@@ -64,10 +63,10 @@ export default {
   data () {
     return {
       userData: {
-        //firstName: '',
+        // firstName: '',
         name: '',
         email: '',
-        password: '',
+        password: ''
       },
       isSubmitted: false,
       firstName: ''

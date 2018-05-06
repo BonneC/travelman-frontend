@@ -6,6 +6,8 @@
 </template>
 
 <script>
+/* eslint-disable no-undef */
+
 export default {
   data () {
     return {
@@ -34,7 +36,6 @@ export default {
     }
   },
   mounted () {
-
     this.axios.get('http://127.0.0.1:8000/2/locations')
       .then((response) => {
         console.log(response.data)
@@ -242,12 +243,12 @@ export default {
       ]
     })
 
-//        MARKERS
+    // MARKERS
 
     this.markersInfo.forEach((feature) => {
-//        kontent za popup
-//        let title = feature.title;
-//        let contentString = title + '<button>Edit</button>' + '<button>Delete</button>';
+      // kontent za popup
+      // let title = feature.title;
+      //         let contentString = title + '<button>Edit</button>' + '<button>Delete</button>';
 
       let marker = null
 
@@ -258,11 +259,10 @@ export default {
           // icon: this.marker_completed
         })
         // this.markers.push(marker);
-      }
-      else {
+      } else {
         marker = new google.maps.Marker({
           position: feature.position,
-          map: this.map,
+          map: this.map
           // icon: this.marker_uncompleted
         })
       }

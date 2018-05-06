@@ -9,13 +9,13 @@ Vue.use(VueAxios, axios)
 
 export const store = new Vuex.Store({
   state: {
-    idToken: null,
-    //userId: null
+    idToken: null
+    // userId: null
   },
   mutations: {
     authUser (state, userData) {
       state.idToken = userData.token
-      //state.userId = userData.userId
+      // state.userId = userData.userId
     },
     clearAuthData (state) {
       state.idToken = null

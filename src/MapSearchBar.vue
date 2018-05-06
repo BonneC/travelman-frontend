@@ -29,8 +29,9 @@
   </div>
 </template>
 
-
 <script>
+/* eslint-disable no-undef */
+
 export default {
   data () {
     return {
@@ -54,8 +55,8 @@ export default {
       this.city = ac[0]['short_name']
       console.log(`The user picked ${this.city} with the coordinates ${this.lat}, ${this.lon}`)
     })
-
   },
+
   methods: {
     show () {
       this.$modal.show('save-location')
