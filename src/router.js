@@ -5,7 +5,7 @@ import UserSignup from './users/UserSignup'
 import UserProfile from './users/UserProfile'
 import UserLogin from './users/UserLogin'
 
-Vue.use(VueRouter);
+Vue.use(VueRouter)
 
 const routes = [
   {path: '/', component: Home},
@@ -16,6 +16,6 @@ const routes = [
 
 const router = new VueRouter({
   routes
-});
+})
 
 export default router

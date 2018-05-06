@@ -7,19 +7,16 @@ import MapSearchBar from './MapSearchBar'
 import Navbar from './Navbar'
 import router from './router'
 
-
-import {store} from './store'
+import { store } from './store'
 import VModal from 'vue-js-modal'
 
+Vue.config.productionTip = false
 
-Vue.config.productionTip = false;
+Vue.use(VModal)
 
-Vue.use(VModal);
-
-Vue.component('app-navbar', Navbar);
-Vue.component('app-gmap', GoogleMap);
-Vue.component('app-search', MapSearchBar);
-
+Vue.component('app-navbar', Navbar)
+Vue.component('app-gmap', GoogleMap)
+Vue.component('app-search', MapSearchBar)
 
 /* eslint-disable no-new */
 new Vue({
@@ -29,4 +26,4 @@ new Vue({
   components: {App},
   template: '<App/>',
 
-});
+})

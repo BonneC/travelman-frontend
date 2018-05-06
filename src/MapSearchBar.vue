@@ -31,41 +31,41 @@
 
 
 <script>
-  export default {
-    data() {
-      return {
-        lat: "",
-        long: "",
-        city: ""
-      }
+export default {
+  data () {
+    return {
+      lat: '',
+      long: '',
+      city: ''
+    }
+  },
+  mounted () {
+    let options = {
+      types: ['(cities)']
+    }
+    let input = this.$refs.autocomplete
+    this.autocomplete = new google.maps.places.Autocomplete(input, options)
+
+    this.autocomplete.addListener('place_changed', () => {
+      let place = this.autocomplete.getPlace()
+      let ac = place.address_components
+      this.lat = place.geometry.location.lat()
+      this.lon = place.geometry.location.lng()
+      this.city = ac[0]['short_name']
+      console.log(`The user picked ${this.city} with the coordinates ${this.lat}, ${this.lon}`)
+    })
+
+  },
+  methods: {
+    show () {
+      this.$modal.show('save-location')
     },
-    mounted() {
-      let options = {
-        types: ['(cities)']
-      };
-      let input = this.$refs.autocomplete;
-      this.autocomplete = new google.maps.places.Autocomplete(input, options);
-
-      this.autocomplete.addListener('place_changed', () => {
-        let place = this.autocomplete.getPlace();
-        let ac = place.address_components;
-        this.lat = place.geometry.location.lat();
-        this.lon = place.geometry.location.lng();
-        this.city = ac[0]["short_name"];
-        console.log(`The user picked ${this.city} with the coordinates ${this.lat}, ${this.lon}`);
-      });
-
+    hide () {
+      this.$modal.hide('save-location')
     },
-    methods: {
-      show() {
-        this.$modal.show('save-location');
-      },
-      hide() {
-        this.$modal.hide('save-location');
-      },
-      onChange() {
+    onChange () {
 
-      }
     }
   }
+}
 </script>

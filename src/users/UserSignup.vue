@@ -60,27 +60,27 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        userData: {
-          //firstName: '',
-          name: '',
-          email: '',
-          password: '',
-        },
-        isSubmitted: false,
-        firstName: ''
+export default {
+  data () {
+    return {
+      userData: {
+        //firstName: '',
+        name: '',
+        email: '',
+        password: '',
+      },
+      isSubmitted: false,
+      firstName: ''
 
-      }
-    },
-    methods: {
-      onSubmit() {
-        this.isSubmitted = true;
-        this.$store.dispatch('signup', this.userData)
-      }
+    }
+  },
+  methods: {
+    onSubmit () {
+      this.isSubmitted = true
+      this.$store.dispatch('signup', this.userData)
     }
   }
+}
 </script>
 
 <style>

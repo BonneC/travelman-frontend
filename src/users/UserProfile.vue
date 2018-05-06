@@ -7,16 +7,16 @@
 
 
 <script>
-  import {mapActions} from 'vuex'
+import { mapActions } from 'vuex'
 
-  export default {
-    mounted() {
+export default {
+  mounted () {
 
-    },
-    methods: {
-      ...mapActions([
-        'fetchUser',
-      ])
-    }
+  },
+  methods: {
+    ...mapActions([
+      'fetchUser',
+    ])
   }
+}
 </script>

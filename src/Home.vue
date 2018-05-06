@@ -9,12 +9,12 @@
 
 
 <script>
-  export default {
-    computed: {
-      auth() {
-        return this.$store.getters.isAuthenticated
-      }
+export default {
+  computed: {
+    auth () {
+      return this.$store.getters.isAuthenticated
     }
   }
+}
 
 </script>

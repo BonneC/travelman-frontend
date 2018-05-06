@@ -27,23 +27,23 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        userData: {
-          email: '',
-          password: '',
-          //remember: []
-        },
-        isSubmitted: false
-      }
-    },
-    methods: {
-      onSubmit() {
-        this.isSubmitted = true;
-        this.$store.dispatch('login', this.userData)
+export default {
+  data () {
+    return {
+      userData: {
+        email: '',
+        password: '',
+        //remember: []
+      },
+      isSubmitted: false
+    }
+  },
+  methods: {
+    onSubmit () {
+      this.isSubmitted = true
+      this.$store.dispatch('login', this.userData)
 
-      }
     }
   }
+}
 </script>
