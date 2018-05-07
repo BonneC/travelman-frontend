@@ -11,7 +11,9 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <span class="navbar-brand"><router-link to="/">D WEBPAGE</router-link></span>
+          <router-link to="/">
+            <img src="./assets/logo.png" style="margin:5px; max-height: 80px;" alt="">
+          </router-link>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
