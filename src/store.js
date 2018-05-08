@@ -27,6 +27,7 @@ export const store = new Vuex.Store({
         .then((response) => {
           console.log(response)
           commit('authUser', {token: response.data.acess_token})
+          router.replace('/')
         })
         .catch(error => console.log(error))
     },

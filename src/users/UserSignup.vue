@@ -11,13 +11,13 @@
           <div class="row">
             <div class="col-xs-12 col-sm-6 col-md-6">
               <div class="form-group">
-                <input type="text" v-model.lazy="firstName" name="first_name" id="first_name"
+                <input type="text" v-model.lazy="userData.firstName" name="first_name" id="first_name"
                        class="form-control input-lg" placeholder="First Name" tabindex="1">
               </div>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-6">
               <div class="form-group">
-                <input type="text" v-model.lazy="userData.name" name="last_name" id="last_name"
+                <input type="text" v-model.lazy="userData.lastName" name="last_name" id="last_name"
                        class="form-control input-lg" placeholder="Last Name" tabindex="2">
               </div>
             </div>
@@ -63,13 +63,13 @@ export default {
   data () {
     return {
       userData: {
-        // firstName: '',
-        name: '',
+        firstName: '',
+        lastName: '',
         email: '',
         password: ''
       },
-      isSubmitted: false,
-      firstName: ''
+      isSubmitted: false
+      // firstName: ''
 
     }
   },
