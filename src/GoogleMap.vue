@@ -7,6 +7,7 @@
 
 <script>
 /* eslint-disable no-undef */
+import { mapActions } from 'vuex'
 
 export default {
   data () {
@@ -35,12 +36,12 @@ export default {
       locations: []
     }
   },
+  computed: {
+    locationsprob () {
+      return this.$store.getters.getLocations
+    }
+  },
   mounted () {
-    this.axios.get('http://127.0.0.1:8000/2/locations')
-      .then((response) => {
-        console.log(response.data)
-      })
-
     this.map = new google.maps.Map(document.getElementById('gmap'), {
       zoom: 16,
       center: new google.maps.LatLng(-33.91722, 151.23064),
@@ -242,9 +243,9 @@ export default {
         }
       ]
     })
-
+    this.fetchLocations()
     // MARKERS
-
+    console.log(this.locationsprob)
     this.markersInfo.forEach((feature) => {
       // kontent za popup
       // let title = feature.title;
@@ -276,6 +277,9 @@ export default {
     })
   },
   methods: {
+    ...mapActions([
+      'fetchLocations'
+    ]),
     show () {
       this.$modal.show('edit-location')
     },

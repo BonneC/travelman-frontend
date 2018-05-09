@@ -9,23 +9,31 @@ Vue.use(VueAxios, axios)
 
 export const store = new Vuex.Store({
   state: {
-    idToken: null
-    // userId: null
+    idToken: null,
+    userId: null,
+    locations: null,
   },
   mutations: {
     authUser (state, userData) {
       state.idToken = userData.token
-      // state.userId = userData.userId
+      state.userId = JSON.parse(atob(userData.token.split('.')[1])).sub
+      //console.log(state.userId)
     },
     clearAuthData (state) {
       state.idToken = null
+      state.userId = null
+      state.locations = null
+    },
+    setLocations (state, data) {
+      state.locations = data.locs
+      //console.log(state.locations)
     }
   },
   actions: {
     signup ({commit}, authData) {
       axios.post('http://127.0.0.1:8000/user', authData)
         .then((response) => {
-          console.log(response)
+          //console.log(response)
           commit('authUser', {token: response.data.acess_token})
           router.replace('/')
         })
@@ -34,7 +42,7 @@ export const store = new Vuex.Store({
     login ({commit}, authData) {
       axios.post('http://127.0.0.1:8000/auth/login', authData)
         .then((response) => {
-          console.log(response)
+          //console.log(response)
           commit('authUser', {token: response.data.access_token})
           router.replace('/')
         })
@@ -55,11 +63,22 @@ export const store = new Vuex.Store({
           console.log(response.data)
         })
         .catch(error => console.log(error))
+    },
+    fetchLocations ({commit, state}) {
+      axios.get('http://127.0.0.1:8000/' + state.userId + '/locations')
+        .then((response) => {
+          //console.log(response.data)
+          commit('setLocations', {locs: response.data})
+        })
+        .catch(error => console.log(error))
     }
   },
   getters: {
     isAuthenticated (state) {
       return state.idToken !== null
+    },
+    getLocations (state) {
+      return state.locations
     }
   }
 })
