@@ -8,12 +8,12 @@
 <script>
 /* eslint-disable no-undef */
 import { mapActions } from 'vuex'
+import marker_completed from './assets/marker_completed.png'
+import marker_uncompleted from './assets/marker_uncompleted.png'
 
 export default {
   data () {
     return {
-      marker_completed: './assets/marker_completed.png',
-      marker_uncompleted: './assets/marker_uncompleted.png',
       markersInfo: [{
         position: new google.maps.LatLng(-33.91721, 151.22630),
         title: 'prvo',
@@ -36,9 +36,18 @@ export default {
       locations: []
     }
   },
+  created () {
+    this.fetchLocations()
+  },
   computed: {
     locationsprob () {
       return this.$store.getters.getLocations
+    }
+  },
+  watch: {
+    locationsprob: function (val, oldVal) {
+      console.log('%s', val)
+      this.setMarkers(val)
     }
   },
   mounted () {
@@ -243,7 +252,7 @@ export default {
         }
       ]
     })
-    this.fetchLocations()
+    //this.fetchLocations()
     // MARKERS
     console.log(this.locationsprob)
     this.markersInfo.forEach((feature) => {
@@ -288,6 +297,39 @@ export default {
     },
     beforeOpen (event) {
       console.log(event)
+    },
+    setMarkers (markerInfo) {
+      markerInfo.forEach((feature) => {
+        // kontent za popup
+        // let title = feature.title;
+        //         let contentString = title + '<button>Edit</button>' + '<button>Delete</button>';
+
+        let marker = null
+        console.log(feature.completed)
+        let position = new google.maps.LatLng(feature.lat, feature.lng)
+
+        if (feature.completed) {
+          marker = new google.maps.Marker({
+            position: position,
+            map: this.map,
+            icon: marker_completed
+          })
+          // this.markers.push(marker);
+        } else {
+          marker = new google.maps.Marker({
+            position: position,
+            map: this.map,
+            icon: marker_uncompleted
+          })
+        }
+        this.markers.push(marker)
+
+        let that = this
+
+        google.maps.event.addListener(marker, 'click', function () {
+          that.show()
+        })
+      })
     }
   }
 }

@@ -11,7 +11,7 @@ export const store = new Vuex.Store({
   state: {
     idToken: null,
     userId: null,
-    locations: null,
+    locations: null
   },
   mutations: {
     authUser (state, userData) {
@@ -39,12 +39,13 @@ export const store = new Vuex.Store({
         })
         .catch(error => console.log(error))
     },
-    login ({commit}, authData) {
+    login ({commit, dispatch}, authData) {
       axios.post('http://127.0.0.1:8000/auth/login', authData)
         .then((response) => {
           //console.log(response)
           commit('authUser', {token: response.data.access_token})
           router.replace('/')
+          dispatch('fetchLocations')
         })
         .catch(error => console.log(error))
     },
@@ -65,12 +66,15 @@ export const store = new Vuex.Store({
         .catch(error => console.log(error))
     },
     fetchLocations ({commit, state}) {
-      axios.get('http://127.0.0.1:8000/' + state.userId + '/locations')
-        .then((response) => {
-          //console.log(response.data)
-          commit('setLocations', {locs: response.data})
-        })
-        .catch(error => console.log(error))
+      return new Promise((resolve) => {
+        axios.get('http://127.0.0.1:8000/' + state.userId + '/locations')
+          .then((response) => {
+            //console.log(response.data)
+            commit('setLocations', {locs: response.data})
+            resolve()
+          })
+          .catch(error => console.log(error))
+      })
     }
   },
   getters: {
