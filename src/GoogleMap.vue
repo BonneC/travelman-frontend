@@ -2,6 +2,7 @@
   <div>
     <div class="google-map" id="gmap"></div>
     <modal name="edit-location" @before-open="beforeOpen">Hello</modal>
+    <button @click="removeMarkers">Delete</button>
   </div>
 </template>
 
@@ -14,23 +15,6 @@ import marker_uncompleted from './assets/marker_uncompleted.png'
 export default {
   data () {
     return {
-      markersInfo: [{
-        position: new google.maps.LatLng(-33.91721, 151.22630),
-        title: 'prvo',
-        completed: 1
-      }, {
-        position: new google.maps.LatLng(-33.91539, 151.22820),
-        title: 'vtoro',
-        completed: 0
-      }, {
-        position: new google.maps.LatLng(-33.91747, 151.22912),
-        title: 'treto',
-        completed: 1
-      }, {
-        position: new google.maps.LatLng(-33.91910, 151.22907),
-        title: 'cetvrto',
-        completed: 0
-      }],
       map: null,
       markers: [],
       locations: []
@@ -252,38 +236,6 @@ export default {
         }
       ]
     })
-    //this.fetchLocations()
-    // MARKERS
-    console.log(this.locationsprob)
-    this.markersInfo.forEach((feature) => {
-      // kontent za popup
-      // let title = feature.title;
-      //         let contentString = title + '<button>Edit</button>' + '<button>Delete</button>';
-
-      let marker = null
-
-      if (feature.completed) {
-        marker = new google.maps.Marker({
-          position: feature.position,
-          map: this.map
-          // icon: this.marker_completed
-        })
-        // this.markers.push(marker);
-      } else {
-        marker = new google.maps.Marker({
-          position: feature.position,
-          map: this.map
-          // icon: this.marker_uncompleted
-        })
-      }
-      this.markers.push(marker)
-
-      let that = this
-
-      google.maps.event.addListener(marker, 'click', function () {
-        that.show()
-      })
-    })
   },
   methods: {
     ...mapActions([
@@ -298,11 +250,15 @@ export default {
     beforeOpen (event) {
       console.log(event)
     },
-    setMarkers (markerInfo) {
-      markerInfo.forEach((feature) => {
-        // kontent za popup
-        // let title = feature.title;
-        //         let contentString = title + '<button>Edit</button>' + '<button>Delete</button>';
+    removeMarkers () {
+      for (let i = 0; i < this.markers.length; i++) {
+        this.markers[i].setMap(null)
+      }
+      this.markers = []
+    },
+    setMarkers (markersInfo) {
+      this.removeMarkers()
+      markersInfo.forEach((feature) => {
 
         let marker = null
         console.log(feature.completed)
@@ -314,7 +270,6 @@ export default {
             map: this.map,
             icon: marker_completed
           })
-          // this.markers.push(marker);
         } else {
           marker = new google.maps.Marker({
             position: position,
