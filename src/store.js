@@ -17,7 +17,6 @@ export const store = new Vuex.Store({
     authUser (state, userData) {
       state.idToken = userData.token
       state.userId = JSON.parse(atob(userData.token.split('.')[1])).sub
-      //console.log(state.userId)
     },
     clearAuthData (state) {
       state.idToken = null
@@ -26,14 +25,19 @@ export const store = new Vuex.Store({
     },
     setLocations (state, data) {
       state.locations = data.locs
-      //console.log(state.locations)
+    },
+    removeLocations (state, data) {
+      state.locations.forEach((location) => {
+        if (location.id === data) {
+          state.locations.splice(state.locations.indexOf(location), 1)
+        }
+      })
     }
   },
   actions: {
     signup ({commit}, authData) {
       axios.post('http://127.0.0.1:8000/user', authData)
         .then((response) => {
-          //console.log(response)
           commit('authUser', {token: response.data.acess_token})
           router.replace('/')
         })
@@ -42,7 +46,6 @@ export const store = new Vuex.Store({
     login ({commit, dispatch}, authData) {
       axios.post('http://127.0.0.1:8000/auth/login', authData)
         .then((response) => {
-          //console.log(response)
           commit('authUser', {token: response.data.access_token})
           router.replace('/')
           dispatch('fetchLocations')
@@ -69,12 +72,26 @@ export const store = new Vuex.Store({
       return new Promise((resolve) => {
         axios.get('http://127.0.0.1:8000/' + state.userId + '/locations')
           .then((response) => {
-            //console.log(response.data)
             commit('setLocations', {locs: response.data})
             resolve()
           })
           .catch(error => console.log(error))
       })
+    },
+    deleteLocation ({commit, state}, locationId) {
+      axios.delete('http://127.0.0.1:8000/' + state.userId + '/locations/' + locationId)
+        .then((response) => {
+          console.log(response)
+          commit('removeLocation', {id: locationId})
+        })
+        .catch(error => console.log(error))
+    },
+    updateLocation ({commit, state}, locationData) {
+      axios.put('http://127.0.0.1:8000/' + state.userId + '/locations/' + locationData.id)
+        .then((response) => {
+          console.log(response)
+        })
+        .catch(error => console.log(error))
     }
   },
   getters: {

@@ -1,7 +1,11 @@
 <template>
   <div>
     <div class="google-map" id="gmap"></div>
-    <modal name="edit-location" @before-open="beforeOpen">Hello</modal>
+    <!--<modal name="edit-location" @before-open="beforeOpen">-->
+      <!--<button>Delete</button>-->
+      <!--<p>{{foo}}</p>-->
+    <!--</modal>-->
+    <v-dialog/>
     <button @click="removeMarkers">Delete</button>
   </div>
 </template>
@@ -36,7 +40,7 @@ export default {
   },
   mounted () {
     this.map = new google.maps.Map(document.getElementById('gmap'), {
-      zoom: 16,
+      zoom: 2,
       center: new google.maps.LatLng(-33.91722, 151.23064),
       disableDefaultUI: true,
       styles: [
@@ -241,14 +245,23 @@ export default {
     ...mapActions([
       'fetchLocations'
     ]),
-    show () {
-      this.$modal.show('edit-location')
+    show (locationData) {
+      this.$modal.show('dialog', {
+        title: 'OK',
+        text: locationData.lat,
+        buttons: [
+          {
+            title: 'Deal with it',
+            handler: () => { alert('Woot!') }
+          }
+        ]
+      })
     },
     hide () {
       this.$modal.hide('edit-location')
     },
     beforeOpen (event) {
-      console.log(event)
+      console.log(event.params)
     },
     removeMarkers () {
       for (let i = 0; i < this.markers.length; i++) {
@@ -282,7 +295,7 @@ export default {
         let that = this
 
         google.maps.event.addListener(marker, 'click', function () {
-          that.show()
+          that.show(feature)
         })
       })
     }

@@ -12,7 +12,7 @@ import VModal from 'vue-js-modal'
 
 Vue.config.productionTip = false
 
-Vue.use(VModal)
+Vue.use(VModal, {dialog: true})
 
 Vue.component('app-navbar', Navbar)
 Vue.component('app-gmap', GoogleMap)
