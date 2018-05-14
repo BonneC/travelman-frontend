@@ -26,9 +26,9 @@ export const store = new Vuex.Store({
     setLocations (state, data) {
       state.locations = data.locs
     },
-    removeLocations (state, data) {
+    removeLocation (state, data) {
       state.locations.forEach((location) => {
-        if (location.id === data) {
+        if (location.id === data.id) {
           state.locations.splice(state.locations.indexOf(location), 1)
         }
       })
@@ -79,12 +79,14 @@ export const store = new Vuex.Store({
       })
     },
     deleteLocation ({commit, state}, locationId) {
-      axios.delete('http://127.0.0.1:8000/' + state.userId + '/locations/' + locationId)
-        .then((response) => {
-          console.log(response)
-          commit('removeLocation', {id: locationId})
-        })
-        .catch(error => console.log(error))
+      return new Promise((resolve) => {
+        axios.delete('http://127.0.0.1:8000/' + state.userId + '/locations/' + locationId)
+          .then((response) => {
+            console.log(response)
+            commit('removeLocation', {id: locationId})
+          })
+          .catch(error => console.log(error))
+      })
     },
     updateLocation ({commit, state, dispatch}, locationData) {
       return new Promise((resolve) => {

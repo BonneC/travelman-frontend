@@ -254,15 +254,18 @@ export default {
         buttons: [
           {
             title: 'Delete',
-            handler: () => { alert('Woot!') }
+            handler: () => {
+              if (this.deleteLocation(locationData.id)) {
+                this.hide()
+              }
+            }
           },
           {
             title: 'I\'ve been here',
             handler: () => {
               locationData.completed = 1
-              if(this.updateLocation(locationData)){
+              if (this.updateLocation(locationData)) {
                 this.hide()
-                console.log('provadzha')
               }
             }
           }
