@@ -2,8 +2,8 @@
   <div>
     <div class="google-map" id="gmap"></div>
     <!--<modal name="edit-location" @before-open="beforeOpen">-->
-      <!--<button>Delete</button>-->
-      <!--<p>{{foo}}</p>-->
+    <!--<button>Delete</button>-->
+    <!--<p>{{foo}}</p>-->
     <!--</modal>-->
     <v-dialog/>
     <button @click="removeMarkers">Delete</button>
@@ -243,7 +243,9 @@ export default {
   },
   methods: {
     ...mapActions([
-      'fetchLocations'
+      'fetchLocations',
+      'deleteLocation',
+      'updateLocation'
     ]),
     show (locationData) {
       this.$modal.show('dialog', {
@@ -251,14 +253,24 @@ export default {
         text: locationData.lat,
         buttons: [
           {
-            title: 'Deal with it',
+            title: 'Delete',
             handler: () => { alert('Woot!') }
+          },
+          {
+            title: 'I\'ve been here',
+            handler: () => {
+              locationData.completed = 1
+              if(this.updateLocation(locationData)){
+                this.hide()
+                console.log('provadzha')
+              }
+            }
           }
         ]
       })
     },
     hide () {
-      this.$modal.hide('edit-location')
+      this.$modal.hide('dialog')
     },
     beforeOpen (event) {
       console.log(event.params)

@@ -86,12 +86,15 @@ export const store = new Vuex.Store({
         })
         .catch(error => console.log(error))
     },
-    updateLocation ({commit, state}, locationData) {
-      axios.put('http://127.0.0.1:8000/' + state.userId + '/locations/' + locationData.id)
-        .then((response) => {
-          console.log(response)
-        })
-        .catch(error => console.log(error))
+    updateLocation ({commit, state, dispatch}, locationData) {
+      return new Promise((resolve) => {
+        axios.put('http://127.0.0.1:8000/' + state.userId + '/locations/' + locationData.id, locationData)
+          .then((response) => {
+            dispatch('fetchLocations')
+            console.log(response)
+          })
+          .catch(error => console.log(error))
+      })
     }
   },
   getters: {
