@@ -14,9 +14,18 @@ export const store = new Vuex.Store({
     locations: null
   },
   mutations: {
+    initialiseStore (state) {
+      if (localStorage.getItem('idToken') && localStorage.getItem('userId')) {
+        state.idToken = localStorage.getItem('idToken')
+        state.userId = localStorage.getItem('userId')
+      }
+    },
     authUser (state, userData) {
       state.idToken = userData.token
       state.userId = JSON.parse(atob(userData.token.split('.')[1])).sub
+
+      localStorage.setItem('idToken', state.idToken)
+      localStorage.setItem('userId', state.userId)
     },
     clearAuthData (state) {
       state.idToken = null
