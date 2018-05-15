@@ -11,7 +11,8 @@ export const store = new Vuex.Store({
   state: {
     idToken: null,
     userId: null,
-    locations: null
+    locations: null,
+    userInfo: null
   },
   mutations: {
     initialiseStore (state) {
@@ -41,6 +42,9 @@ export const store = new Vuex.Store({
           state.locations.splice(state.locations.indexOf(location), 1)
         }
       })
+    },
+    getUserInformation (state, data) {
+      state.userInfo = data
     }
   },
   actions: {
@@ -64,6 +68,9 @@ export const store = new Vuex.Store({
     logout ({commit}) {
       commit('clearAuthData')
       router.replace('/')
+
+      localStorage.removeItem('idToken')
+      localStorage.removeItem('userId')
     },
     fetchUser ({commit, state}) {
       axios.get('http://127.0.0.1:8000/user', {
@@ -74,6 +81,7 @@ export const store = new Vuex.Store({
       })
         .then((response) => {
           console.log(response.data)
+          commit('getUserInformation', response.data)
         })
         .catch(error => console.log(error))
     },
@@ -124,6 +132,9 @@ export const store = new Vuex.Store({
     },
     getLocations (state) {
       return state.locations
+    },
+    getUserInfo (state) {
+      return state.userInfo
     }
   }
 })

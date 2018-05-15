@@ -10,6 +10,10 @@ import router from './router'
 import { store } from './store'
 import VModal from 'vue-js-modal'
 
+import './assets/css/core.min.css'
+import './assets/css/app.min.css'
+import './assets/css/style.min.css'
+
 Vue.config.productionTip = false
 
 Vue.use(VModal, {dialog: true})
@@ -28,6 +32,9 @@ new Vue({
 
   beforeCreate () {
     this.$store.commit('initialiseStore')
+    if (this.$store.getters.isAuthenticated) {
+      this.$store.dispatch('fetchUser')
+    }
   }
 
 })

@@ -286,7 +286,6 @@ export default {
     setMarkers (markersInfo) {
       this.removeMarkers()
       markersInfo.forEach((feature) => {
-
         let marker = null
         let position = new google.maps.LatLng(feature.lat, feature.lng)
 
@@ -311,24 +310,24 @@ export default {
           that.show(feature)
         })
       })
-    },
-//    geocode (locationData) {
-//      let geocoder = new google.maps.Geocoder
-//      let latlng = {lat: parseFloat(locationData.lat), lng: parseFloat(locationData.lng)}
-//
-//      return geocoder.geocode({'location': latlng}, function (results, status) {
-//        if (status === 'OK') {
-//          if (results[0]) {
-//            return results[0].formatted_address
-//          } else {
-//            return 0
-//          }
-//        } else {
-//          return 0
-//        }
-//      })
-//
-//    }
+    }
+    //    geocode (locationData) {
+    //      let geocoder = new google.maps.Geocoder
+    //      let latlng = {lat: parseFloat(locationData.lat), lng: parseFloat(locationData.lng)}
+    //
+    //      return geocoder.geocode({'location': latlng}, function (results, status) {
+    //        if (status === 'OK') {
+    //          if (results[0]) {
+    //            return results[0].formatted_address
+    //          } else {
+    //            return 0
+    //          }
+    //        } else {
+    //          return 0
+    //        }
+    //      })
+    //
+    //    }
   }
 }
 </script>

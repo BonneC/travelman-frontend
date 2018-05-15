@@ -1,53 +1,70 @@
 <template>
   <div>
-    <nav class="navbar navbar-default">
-      <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                  data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <router-link to="/">
-            <img src="./assets/logo.png" style="margin:5px; max-height: 80px;" alt="">
-          </router-link>
-        </div>
+    <header class="topbar topbar-expand-lg">
+      <div class="topbar-left">
+        <span class="topbar-btn topbar-menu-toggler"><i>&#9776;</i></span>
+        <router-link to="/">
+          <img src="./assets/logo.png" style="margin:5px; max-height: 80px;" alt="">
+        </router-link>
+      </div>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav navbar-right">
-            <li v-if="auth">
-              <router-link to="/">Home</router-link>
+      <div class="topbar-right">
+        <nav class="topbar-navigation">
+          <ul class="menu">
+            <li v-if="auth" class="menu-item active">
+              <router-link to="/" class="menu-link">
+                <span class="icon ti-home"></span>
+                <span class="title">Home</span>
+              </router-link>
             </li>
-            <li v-if="!auth">
-              <router-link to="/join">Sign up</router-link>
+            <li v-if="!auth" class="menu-item">
+              <router-link to="/join" class="menu-link">
+                <span class="icon ti-plus"></span>
+                <span class="title">Sign Up</span>
+              </router-link>
             </li>
-            <li v-if="!auth">
-              <router-link to="/login">Sign In</router-link>
+            <li v-if="!auth" class="menu-item">
+              <router-link to="/login" class="menu-link">
+                <span class="icon ti-shift-right"></span>
+                <span class="title">Sign In</span>
+              </router-link>
             </li>
-            <li v-if="auth">
-              <router-link to="/user">Username</router-link>
+
+            <li v-if="auth" class="menu-item">
+              <router-link to="/user" class="menu-link">
+                <span class="title">{{ username.first_name }}</span>
+              </router-link>
             </li>
-            <li v-if="auth" class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                 aria-expanded="false"><span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="#">Settings</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li role="separator" class="divider"></li>
-                <li>
-                  <a href="#" @click="onLogout">Log out</a>
+
+            <li v-if="auth" class="menu-item">
+              <a class="menu-link" href="#">
+                <span class="title">Settings</span>
+                <span class="arrow"></span>
+              </a>
+              <ul class="menu-submenu menu-submenu-right">
+                <li class="menu-item">
+                  <a class="menu-link" href="#">
+                    <span class="title">Blank page</span>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a class="menu-link" href="#">
+                    <span class="title">Topbar</span>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a class="menu-link" href="#" @click="onLogout()">
+                    <span class="icon ti-power-off"></span>
+                    <span class="title">Logout</span>
+                  </a>
                 </li>
               </ul>
             </li>
+
           </ul>
-        </div><!-- /.navbar-collapse -->
-      </div><!-- /.container-fluid -->
-    </nav>
+        </nav>
+      </div>
+    </header>
 
   </div>
 </template>
@@ -57,6 +74,9 @@ export default {
   computed: {
     auth () {
       return this.$store.getters.isAuthenticated
+    },
+    username () {
+      return this.$store.getters.getUserInfo
     }
   },
   methods: {
