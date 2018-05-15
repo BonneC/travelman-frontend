@@ -34,7 +34,6 @@ export default {
   },
   watch: {
     locationsprob: function (val, oldVal) {
-      console.log('%s', val)
       this.setMarkers(val)
     }
   },
@@ -289,7 +288,6 @@ export default {
       markersInfo.forEach((feature) => {
 
         let marker = null
-        console.log(feature.completed)
         let position = new google.maps.LatLng(feature.lat, feature.lng)
 
         if (feature.completed) {

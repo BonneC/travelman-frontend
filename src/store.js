@@ -78,6 +78,16 @@ export const store = new Vuex.Store({
           .catch(error => console.log(error))
       })
     },
+    addLocation ({state, dispatch}, location) {
+      return new Promise((resolve) => {
+        axios.post('http://127.0.0.1:8000/' + state.userId + '/locations', location)
+          .then((response) => {
+            console.log(response)
+            dispatch('fetchLocations')
+          })
+          .catch(error => console.log(error))
+      })
+    },
     deleteLocation ({commit, state}, locationId) {
       return new Promise((resolve) => {
         axios.delete('http://127.0.0.1:8000/' + state.userId + '/locations/' + locationId)
