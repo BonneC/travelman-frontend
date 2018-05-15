@@ -9,7 +9,7 @@
            @input="onChange"/>
     <modal name="save-location">
       <form class="form container-fluid">
-        <h3>Location {{city}}</h3>
+        <h3>Location {{address}}</h3>
         <div class="row">
           <div class="col-sm-12">
             <label><input type="radio" name="completed" v-model="completed" value="1"> I've been here</label>
@@ -40,7 +40,7 @@ export default {
     return {
       lat: '',
       lng: '',
-      city: '',
+      address: '',
       completed: ''
     }
   },
@@ -57,8 +57,7 @@ export default {
       let ac = place.address_components
       this.lat = place.geometry.location.lat()
       this.lng = place.geometry.location.lng()
-      this.city = ac[0]['short_name']
-      console.log('The user picked ${this.city} with the coordinates ${this.lat}, ${this.lng}')
+      this.address = ac[0]['short_name']
     })
   },
 
@@ -76,8 +75,9 @@ export default {
 
     },
     onSubmit () {
-      if (this.lat && this.lng && this.city) {
+      if (this.lat && this.lng && this.address) {
         let location = {
+          address: String(this.address),
           lat: String(this.lat),
           lng: String(this.lng),
           completed: this.completed
