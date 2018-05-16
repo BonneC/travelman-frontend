@@ -32,6 +32,9 @@ export const store = new Vuex.Store({
       state.idToken = null
       state.userId = null
       state.locations = null
+
+      localStorage.removeItem('idToken')
+      localStorage.removeItem('userId')
     },
     setLocations (state, data) {
       state.locations = data.locs
@@ -68,9 +71,6 @@ export const store = new Vuex.Store({
     logout ({commit}) {
       commit('clearAuthData')
       router.replace('/')
-
-      localStorage.removeItem('idToken')
-      localStorage.removeItem('userId')
     },
     fetchUser ({commit, state}) {
       axios.get('http://127.0.0.1:8000/user', {

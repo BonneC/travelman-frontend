@@ -78,7 +78,7 @@ export default {
       return this.$store.getters.isAuthenticated
     },
     username () {
-      return this.$store.getters.getUserInfo
+      return this.$store.getters.getUserInfo || {first_name: 'No username'}
     }
   },
   methods: {

@@ -33,7 +33,10 @@ new Vue({
   beforeCreate () {
     this.$store.commit('initialiseStore')
     if (this.$store.getters.isAuthenticated) {
-      this.$store.dispatch('fetchUser')
+      this.$store.dispatch('fetchUser').catch(function (error) {
+        console.error(error)
+        this.$store.commit('clearAuthData')
+      })
     }
   }
 
