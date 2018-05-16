@@ -31,7 +31,7 @@ new Vue({
   template: '<App/>',
 
   beforeCreate () {
-    this.$store.commit('initialiseStore')
+    this.$store.commit('initializeStore')
     if (this.$store.getters.isAuthenticated) {
       this.$store.dispatch('fetchUser').catch(function (error) {
         console.error(error)

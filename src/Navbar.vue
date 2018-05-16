@@ -32,7 +32,7 @@
 
             <li v-if="auth" class="menu-item">
               <router-link to="/user" class="menu-link">
-                <span class="title">{{ username.first_name }}</span>
+                <span class="title">{{ userInfo.first_name }}</span>
               </router-link>
             </li>
 
@@ -45,7 +45,7 @@
                 <li class="menu-item">
                   <a class="menu-link" href="#">
                     <router-link to="/settings" class="menu-link">
-                      <span class="title">{{ username.first_name }}</span>
+                      <span class="title">{{ userInfo.first_name }}</span>
                     </router-link>
                   </a>
                 </li>
@@ -77,8 +77,8 @@ export default {
     auth () {
       return this.$store.getters.isAuthenticated
     },
-    username () {
-      return this.$store.getters.getUserInfo || {first_name: 'No username'}
+    userInfo () {
+      return this.$store.getters.getUserInfo
     }
   },
   methods: {

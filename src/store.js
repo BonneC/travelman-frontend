@@ -15,7 +15,7 @@ export const store = new Vuex.Store({
     userInfo: null
   },
   mutations: {
-    initialiseStore (state) {
+    initializeStore (state) {
       if (localStorage.getItem('idToken') && localStorage.getItem('userId')) {
         state.idToken = localStorage.getItem('idToken')
         state.userId = localStorage.getItem('userId')
@@ -46,7 +46,7 @@ export const store = new Vuex.Store({
         }
       })
     },
-    getUserInformation (state, data) {
+    setUserInformation (state, data) {
       state.userInfo = data
     }
   },
@@ -65,6 +65,7 @@ export const store = new Vuex.Store({
           commit('authUser', {token: response.data.access_token})
           router.replace('/')
           dispatch('fetchLocations')
+          dispatch('fetchUser')
         })
         .catch(error => console.log(error))
     },
@@ -81,7 +82,7 @@ export const store = new Vuex.Store({
       })
         .then((response) => {
           console.log(response.data)
-          commit('getUserInformation', response.data)
+          commit('setUserInformation', response.data)
         })
         .catch(error => console.log(error))
     },
