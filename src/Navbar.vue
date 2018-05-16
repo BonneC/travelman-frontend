@@ -44,7 +44,9 @@
               <ul class="menu-submenu menu-submenu-right">
                 <li class="menu-item">
                   <a class="menu-link" href="#">
-                    <span class="title">Blank page</span>
+                    <router-link to="/settings" class="menu-link">
+                      <span class="title">{{ username.first_name }}</span>
+                    </router-link>
                   </a>
                 </li>
                 <li class="menu-item">
