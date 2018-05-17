@@ -12,7 +12,6 @@
           </div>
         </div>
       </div>
-
       <!-- Footer -->
       <footer class="site-footer">
         <div class="row">
@@ -24,8 +23,6 @@
       <!-- END Footer -->
     </main>
   </div>
-
-
 </template>
 
 <script>export default {}

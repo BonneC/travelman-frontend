@@ -9,29 +9,36 @@ Vue.use(VueAxios, axios)
 
 export const store = new Vuex.Store({
   state: {
-    idToken: null,
-    userId: null,
+    // idToken: null,
+    // userId: null,
+    isLogged: null,
     locations: null,
     userInfo: null
   },
   mutations: {
     initializeStore (state) {
       if (localStorage.getItem('idToken') && localStorage.getItem('userId')) {
-        state.idToken = localStorage.getItem('idToken')
-        state.userId = localStorage.getItem('userId')
+        state.isLogged = true
       }
+      // else {
+      //   state.isLogged = false
+      // }
     },
     authUser (state, userData) {
-      state.idToken = userData.token
-      state.userId = JSON.parse(atob(userData.token.split('.')[1])).sub
+      // state.idToken = userData.token
+      // state.userId = JSON.parse(atob(userData.token.split('.')[1])).sub
 
-      localStorage.setItem('idToken', state.idToken)
-      localStorage.setItem('userId', state.userId)
+      localStorage.setItem('idToken', userData.token)
+      localStorage.setItem('userId', JSON.parse(atob(userData.token.split('.')[1])).sub)
+
+      state.isLogged = true
     },
     clearAuthData (state) {
-      state.idToken = null
-      state.userId = null
+      // state.idToken = null
+      // state.userId = null
       state.locations = null
+      state.isLogged = null
+      state.userInfo = null
 
       localStorage.removeItem('idToken')
       localStorage.removeItem('userId')
@@ -77,7 +84,7 @@ export const store = new Vuex.Store({
       axios.get('http://127.0.0.1:8000/user', {
         headers: {
           Accept: 'application/json',
-          Authorization: 'Bearer ' + state.idToken
+          Authorization: 'Bearer ' + localStorage.getItem('idToken')
         }
       })
         .then((response) => {
@@ -86,9 +93,15 @@ export const store = new Vuex.Store({
         })
         .catch(error => console.log(error))
     },
+    updateUser ({commit, state}, userInfo) {
+      axios.put('http://127.0.0.1:8000/user')
+        .then((respone)=> {
+        })
+        .catch(error => console.log(error))
+    },
     fetchLocations ({commit, state}) {
       return new Promise((resolve) => {
-        axios.get('http://127.0.0.1:8000/' + state.userId + '/locations')
+        axios.get('http://127.0.0.1:8000/' + localStorage.userId + '/locations')
           .then((response) => {
             commit('setLocations', {locs: response.data})
             resolve()
@@ -129,13 +142,13 @@ export const store = new Vuex.Store({
   },
   getters: {
     isAuthenticated (state) {
-      return state.idToken !== null
+      return state.isLogged
     },
     getLocations (state) {
       return state.locations
     },
     getUserInfo (state) {
-      return state.userInfo
+      return state.userInfo || 'userInfo'
     }
   }
 })

@@ -45,7 +45,7 @@
                 <li class="menu-item">
                   <a class="menu-link" href="#">
                     <router-link to="/settings" class="menu-link">
-                      <span class="title">{{ userInfo.first_name }}</span>
+                      <span class="title">Actual Settings</span>
                     </router-link>
                   </a>
                 </li>

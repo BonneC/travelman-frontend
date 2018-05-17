@@ -29,8 +29,6 @@
       <div class="col-md-9">
 
         <div class="media-list media-list-divided media-list-hover">
-
-
           <div class="media">
             <a class="avatar avatar-lg status-success" href="#">
               <img src="../assets/logo.png" alt="...">
