@@ -23,7 +23,7 @@
       </div>
       <div v-if="edit" class="form-group">
         <button @click.prevent="disableEdit">Cancel</button>
-        <button @click.prevent="updateUser">Save</button>
+        <button @click.prevent="saveUser">Save</button>
       </div>
       <div v-else class="form-group">
         <button @click.prevent="enableEdit">Edit</button>
@@ -53,7 +53,8 @@ export default {
   },
   methods: {
     ...mapActions([
-      'fetchUser'
+      'fetchUser',
+      'updateUser'
     ]),
     enableEdit () {
       this.edit = true
@@ -67,8 +68,8 @@ export default {
         element.disabled = true
       })
     },
-    updateUser () {
-
+    saveUser () {
+      this.updateUser(this.userInfo)
     }
 
   }

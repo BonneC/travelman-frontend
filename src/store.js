@@ -93,9 +93,16 @@ export const store = new Vuex.Store({
         })
         .catch(error => console.log(error))
     },
-    updateUser ({commit, state}, userInfo) {
-      axios.put('http://127.0.0.1:8000/user')
-        .then((respone)=> {
+    updateUser ({commit, state, dispatch}, userInfo) {
+      axios.put('http://127.0.0.1:8000/user', userInfo, {
+        headers: {
+          Accept: 'application/json',
+          Authorization: 'Bearer ' + localStorage.getItem('idToken')
+        }
+      })
+        .then((response) => {
+          console.log(response.data)
+          dispatch('fetchUser')
         })
         .catch(error => console.log(error))
     },
