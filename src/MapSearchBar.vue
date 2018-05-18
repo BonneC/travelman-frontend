@@ -1,13 +1,23 @@
 <template>
   <div>
-    <input id="searchTextField"
-           ref="autocomplete"
-           class="form-control"
-           type="text"
-           size="50"
-           placeholder="Enter a location"
-           autocomplete="on"
-           @input="onChange"/>
+    <div class="search-locations">
+      <div class="input-group">
+
+        <input id="searchTextField"
+               ref="autocomplete"
+               class="form-control form-type-roundinput"
+               type="text"
+               size="50"
+               placeholder="Enter a location"
+               autocomplete="on"
+               @input="onChange"/>
+
+        <span class="input-group-append">
+          <button @click="show" class="btn btn-primary">New</button>
+        </span>
+
+      </div>
+    </div>
 
     <modal name="save-location">
       <form class="form container-fluid">
@@ -29,8 +39,6 @@
         </div>
       </form>
     </modal>
-
-    <button @click="show" class="btn btn-primary">New</button>
 
     <div class="alert alert-warning alert-dismissible fade invalid-location"
          :class="{show: invalidLocation}" role="alert">

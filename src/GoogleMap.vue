@@ -38,8 +38,8 @@ export default {
   },
   mounted () {
     this.map = new google.maps.Map(document.getElementById('gmap'), {
-      zoom: 2,
-      center: new google.maps.LatLng(-33.91722, 151.23064),
+      zoom: 3,
+      center: new google.maps.LatLng(29.1394562, 8.1543387),
       disableDefaultUI: true,
       styles: [
         {
@@ -334,7 +334,7 @@ export default {
 <style>
   .google-map {
     width: 100%;
-    height: 600px;
+    height: 735px;
     margin: 0 auto;
     background: gray;
   }

@@ -1,6 +1,13 @@
 .invalid-location {
   position: fixed;
+  right: 60px;
+  width: 40%;
+  top: 120px;
+}
+
+.search-locations {
+  position: absolute;
   left: 20px;
-  width: 50%;
-  top: 100px;
+  top: 20px;
+  z-index: 9999;
 }
