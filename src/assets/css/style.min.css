@@ -1,0 +1,6 @@
+.invalid-location {
+  position: fixed;
+  left: 20px;
+  width: 50%;
+  top: 100px;
+}

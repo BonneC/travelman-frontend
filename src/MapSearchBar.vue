@@ -2,11 +2,13 @@
   <div>
     <input id="searchTextField"
            ref="autocomplete"
+           class="form-control"
            type="text"
            size="50"
            placeholder="Enter a location"
            autocomplete="on"
            @input="onChange"/>
+
     <modal name="save-location">
       <form class="form container-fluid">
         <h3>Location {{address}}</h3>
@@ -27,7 +29,17 @@
         </div>
       </form>
     </modal>
-    <button @click="show">New</button>
+
+    <button @click="show" class="btn btn-primary">New</button>
+
+    <div class="alert alert-warning alert-dismissible fade invalid-location"
+         :class="{show: invalidLocation}" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <strong>Invalid location!</strong> Please select valid location from the autocomplete.
+    </div>
+
   </div>
 </template>
 
@@ -41,7 +53,10 @@ export default {
       lat: '',
       lng: '',
       address: '',
-      completed: ''
+      completed: '',
+
+      inputLocation: '',
+      invalidLocation: false
     }
   },
   mounted () {
@@ -55,9 +70,11 @@ export default {
     this.autocomplete.addListener('place_changed', () => {
       let place = this.autocomplete.getPlace()
       let ac = place.address_components
+
       this.lat = place.geometry.location.lat()
       this.lng = place.geometry.location.lng()
       this.address = ac[0]['short_name']
+      this.inputLocation = input.value
     })
   },
 
@@ -66,15 +83,29 @@ export default {
       'addLocation'
     ]),
     show () {
-      this.$modal.show('save-location')
+      if (this.lat && this.lng && this.address) {
+        this.$modal.show('save-location')
+      } else {
+        this.invalidLocation = true
+        let that = this
+        setTimeout(function () {
+          that.invalidLocation = false
+        }, 5000)
+      }
     },
     hide () {
       this.$modal.hide('save-location')
     },
     onChange () {
-
+      let input = this.$refs.autocomplete
+      if (this.inputLocation !== input.value) {
+        this.inputLocation = ''
+        this.lat = ''
+        this.lng = ''
+        this.address = ''
+      }
     },
-    onSubmit () {
+    onSubmit (event) {
       if (this.lat && this.lng && this.address) {
         let location = {
           address: String(this.address),
@@ -86,9 +117,6 @@ export default {
           this.hide()
           this.completed = 0
         }
-      }
-      else {
-        alert('Invalid location')
       }
     }
   }

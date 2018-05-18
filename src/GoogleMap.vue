@@ -13,8 +13,8 @@
 <script>
 /* eslint-disable no-undef */
 import { mapActions } from 'vuex'
-import marker_completed from './assets/marker_completed.png'
-import marker_uncompleted from './assets/marker_uncompleted.png'
+import markerCompleted from './assets/marker_completed.png'
+import markerUncompleted from './assets/marker_uncompleted.png'
 
 export default {
   data () {
@@ -293,13 +293,13 @@ export default {
           marker = new google.maps.Marker({
             position: position,
             map: this.map,
-            icon: marker_completed
+            icon: markerCompleted
           })
         } else {
           marker = new google.maps.Marker({
             position: position,
             map: this.map,
-            icon: marker_uncompleted
+            icon: markerUncompleted
           })
         }
         this.markers.push(marker)
@@ -334,7 +334,7 @@ export default {
 
 <style>
   .google-map {
-    width: 800px;
+    width: 100%;
     height: 600px;
     margin: 0 auto;
     background: gray;
