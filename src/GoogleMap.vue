@@ -6,7 +6,6 @@
     <!--<p>{{foo}}</p>-->
     <!--</modal>-->
     <v-dialog/>
-    <button @click="removeMarkers">Delete</button>
   </div>
 </template>
 

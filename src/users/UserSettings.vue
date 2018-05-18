@@ -25,17 +25,17 @@
         <div class="form-group">
           <label class="col-sm-2 control-label">Old password</label>
           <div class="col-sm-10">
-            <input v-model="userInfo.old_password" class="form-control" name="changePass" id="old_pass" type="text">
+            <input v-model="old_password" class="form-control" name="changePass" id="old_pass" type="text">
           </div>
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label">New password</label>
           <div class="col-sm-3">
-            <input v-model="userInfo.new_password" class="form-control" name="changePass" id="new_pass" type="text">
+            <input v-model="new_password" class="form-control" name="changePass" id="new_pass" type="text">
           </div>
           <label class="col-sm-2 control-label">Confirm password</label>
           <div class="col-sm-3">
-            <input v-model="userInfo.conf_new_password" class="form-control" name="changePass" id="conf_new_pass"
+            <input v-model="conf_new_password" class="form-control" name="changePass" id="conf_new_pass"
                    type="text">
           </div>
         </div>

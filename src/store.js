@@ -118,7 +118,7 @@ export const store = new Vuex.Store({
     },
     addLocation ({state, dispatch}, location) {
       return new Promise((resolve) => {
-        axios.post('http://127.0.0.1:8000/' + state.userId + '/locations', location)
+        axios.post('http://127.0.0.1:8000/' + localStorage.userId + '/locations', location)
           .then((response) => {
             console.log(response)
             dispatch('fetchLocations')
@@ -128,7 +128,7 @@ export const store = new Vuex.Store({
     },
     deleteLocation ({commit, state}, locationId) {
       return new Promise((resolve) => {
-        axios.delete('http://127.0.0.1:8000/' + state.userId + '/locations/' + locationId)
+        axios.delete('http://127.0.0.1:8000/' + localStorage.userId + '/locations/' + locationId)
           .then((response) => {
             console.log(response)
             commit('removeLocation', {id: locationId})
@@ -138,7 +138,7 @@ export const store = new Vuex.Store({
     },
     updateLocation ({commit, state, dispatch}, locationData) {
       return new Promise((resolve) => {
-        axios.put('http://127.0.0.1:8000/' + state.userId + '/locations/' + locationData.id, locationData)
+        axios.put('http://127.0.0.1:8000/' + localStorage.userId + '/locations/' + locationData.id, locationData)
           .then((response) => {
             dispatch('fetchLocations')
             console.log(response)
