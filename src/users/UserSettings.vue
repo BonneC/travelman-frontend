@@ -4,21 +4,21 @@
       <div v-if="!change_pass" class="form-group">
         <label class="col-sm-2 control-label" for="first_name">First Name</label>
         <div class="col-sm-10">
-          <input v-model="userInfo.first_name" class="form-control" name="disabledInput" id="first_name" type="text"
+          <input v-model="first_name" class="form-control" name="disabledInput" id="first_name" type="text"
                  disabled>
         </div>
       </div>
       <div v-if="!change_pass" class="form-group">
         <label class="col-sm-2 control-label" for="last_name">Last Name</label>
         <div class="col-sm-10">
-          <input v-model="userInfo.last_name" class="form-control" name="disabledInput" id="last_name" type="text"
+          <input v-model="this.last_name" class="form-control" name="disabledInput" id="last_name" type="text"
                  disabled>
         </div>
       </div>
       <div v-if="!change_pass" class="form-group">
         <label class="col-sm-2 control-label" for="email">Email</label>
         <div class="col-sm-10">
-          <input v-model="userInfo.email" class="form-control" name="disabledInput" id="email" type="text" disabled>
+          <input v-model="email" class="form-control" name="disabledInput" id="email" type="text" disabled>
         </div>
       </div>
       <div v-if="change_pass">
@@ -64,6 +64,9 @@ export default {
     return {
       edit: false,
       change_pass: false,
+      first_name: '',
+      last_name: '',
+      email: '',
       old_password: '',
       new_password: '',
       conf_new_password: ''
@@ -75,7 +78,9 @@ export default {
     }
   },
   mounted () {
-
+    this.first_name = this.userInfo.first_name
+    this.last_name = this.userInfo.last_name
+    this.email = this.userInfo.email
   },
   methods: {
     ...mapActions([
@@ -96,14 +101,34 @@ export default {
       })
     },
     saveUser () {
+      let userData = null
+
       if (this.change_pass) {
         if (this.new_password !== this.conf_new_password) {
           alert('passwords dont mech')
         }
+        else {
+          userData = {
+            change: 1,
+            old_password: this.old_password,
+            new_password: this.new_password
+          }
+
+        }
       }
       else {
-        this.updateUser(this.userInfo)
+        console.log(this.first_name)
+        userData = {
+          change: 0,
+          first_name: this.first_name,
+          last_name: this.last_name,
+          email: this.email
+
+        }
       }
+      this.updateUser(userData).catch(function (error) {
+        console.error(error)
+      })
     },
     changePass () {
 

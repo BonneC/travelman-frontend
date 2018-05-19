@@ -94,17 +94,19 @@ export const store = new Vuex.Store({
         .catch(error => console.log(error))
     },
     updateUser ({commit, state, dispatch}, userInfo) {
-      axios.put('http://127.0.0.1:8000/user', userInfo, {
-        headers: {
-          Accept: 'application/json',
-          Authorization: 'Bearer ' + localStorage.getItem('idToken')
-        }
-      })
-        .then((response) => {
-          console.log(response.data)
-          dispatch('fetchUser')
+      return new Promise((resolve) => {
+        axios.put('http://127.0.0.1:8000/user', userInfo, {
+          headers: {
+            Accept: 'application/json',
+            Authorization: 'Bearer ' + localStorage.getItem('idToken')
+          }
         })
-        .catch(error => console.log(error))
+          .then((response) => {
+            console.log(response.data)
+            dispatch('fetchUser')
+          })
+          .catch(error => console.log(error))
+      })
     },
     fetchLocations ({commit, state}) {
       return new Promise((resolve) => {

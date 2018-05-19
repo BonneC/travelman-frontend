@@ -33,14 +33,8 @@
             <li v-if="auth" class="menu-item">
               <router-link to="/user" class="menu-link">
                 <span class="title">{{ userInfo.first_name }}</span>
-              </router-link>
-            </li>
-
-            <li v-if="auth" class="menu-item">
-              <a class="menu-link" href="#">
-                <span class="title">Settings</span>
                 <span class="arrow"></span>
-              </a>
+              </router-link>
               <ul class="menu-submenu menu-submenu-right">
                 <li class="menu-item">
                   <a class="menu-link" href="#">
@@ -62,7 +56,6 @@
                 </li>
               </ul>
             </li>
-
           </ul>
         </nav>
       </div>

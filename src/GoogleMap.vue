@@ -310,23 +310,6 @@ export default {
         })
       })
     }
-    //    geocode (locationData) {
-    //      let geocoder = new google.maps.Geocoder
-    //      let latlng = {lat: parseFloat(locationData.lat), lng: parseFloat(locationData.lng)}
-    //
-    //      return geocoder.geocode({'location': latlng}, function (results, status) {
-    //        if (status === 'OK') {
-    //          if (results[0]) {
-    //            return results[0].formatted_address
-    //          } else {
-    //            return 0
-    //          }
-    //        } else {
-    //          return 0
-    //        }
-    //      })
-    //
-    //    }
   }
 }
 </script>
