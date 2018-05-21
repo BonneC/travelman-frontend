@@ -91,7 +91,9 @@ export const store = new Vuex.Store({
           console.log(response.data)
           commit('setUserInformation', response.data)
         })
-        .catch(error => console.log(error))
+        .catch(function () {
+          commit('clearAuthData')
+        })
     },
     updateUser ({commit, state, dispatch}, userInfo) {
       return new Promise((resolve) => {
