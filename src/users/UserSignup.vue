@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container card card-shadowed px-50 py-30">
 
     <div class="row">
       <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
@@ -48,10 +48,15 @@
                      @click.prevent="onSubmit"
                      class="btn btn-primary btn-block btn-lg"
                      tabindex="7">
+
+              <div class="form-group">
+                <router-link to="/login" class="text-muted hover-primary">
+                  Already have an account? Log in here.
+                </router-link>
+              </div>
             </div>
           </div>
         </form>
-        <p>{{isSubmitted}}</p>
       </div>
     </div>
 

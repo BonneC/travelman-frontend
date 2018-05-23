@@ -5,12 +5,7 @@
     <!--<app-search></app-search>-->
     <main class="mt-70">
       <div class="main-content">
-
-        <div class="card">
-          <div class="card-body">
-            <router-view></router-view>
-          </div>
-        </div>
+        <router-view></router-view>
       </div>
       <!-- Footer -->
       <footer class="site-footer">
