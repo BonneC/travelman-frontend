@@ -58,10 +58,11 @@ export const store = new Vuex.Store({
     }
   },
   actions: {
-    signup ({commit}, authData) {
+    signup ({commit, dispatch}, authData) {
       axios.post('http://127.0.0.1:8000/user', authData)
         .then((response) => {
           commit('authUser', {token: response.data.access_token})
+          dispatch('fetchUser')
           router.replace('/')
         })
         .catch(error => console.log(error))
