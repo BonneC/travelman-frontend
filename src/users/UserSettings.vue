@@ -117,7 +117,6 @@ export default {
         }
       }
       else {
-        console.log(this.first_name)
         userData = {
           change: 0,
           first_name: this.first_name,

@@ -9,8 +9,6 @@ Vue.use(VueAxios, axios)
 
 export const store = new Vuex.Store({
   state: {
-    // idToken: null,
-    // userId: null,
     isLogged: null,
     locations: null,
     userInfo: null
@@ -20,14 +18,8 @@ export const store = new Vuex.Store({
       if (localStorage.getItem('idToken') && localStorage.getItem('userId')) {
         state.isLogged = true
       }
-      // else {
-      //   state.isLogged = false
-      // }
     },
     authUser (state, userData) {
-      // state.idToken = userData.token
-      // state.userId = JSON.parse(atob(userData.token.split('.')[1])).sub
-
       localStorage.setItem('idToken', userData.token)
       localStorage.setItem('userId', JSON.parse(atob(userData.token.split('.')[1])).sub)
 
@@ -146,6 +138,15 @@ export const store = new Vuex.Store({
         axios.put('http://127.0.0.1:8000/' + localStorage.userId + '/locations/' + locationData.id, locationData)
           .then((response) => {
             dispatch('fetchLocations')
+            console.log(response)
+          })
+          .catch(error => console.log(error))
+      })
+    },
+    checkEmail ({commit}, email) {
+      return new Promise((resolve) => {
+        axios.post('http://127.0.0.1:8000/forgotpassword', email)
+          .then((response) => {
             console.log(response)
           })
           .catch(error => console.log(error))
