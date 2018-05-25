@@ -8,8 +8,9 @@
         <input type="email" id="email" v-model="email" class="form-control">
       </div>
       <input type="submit" @click.prevent="sendEmail" class="btn btn-primary btn-block" value="Submit">
+      <span v-if="showMsg">{{msg}}</span>
     </form>
-    <div v-model="showMsg"></div>
+
     <form class="form-forgot" v-if="token">
       <h2>Create new password:</h2>
       <div class="form-group">
@@ -34,7 +35,8 @@ export default {
   data () {
     return {
       email: '',
-      showMsg: '',
+      showMsg: false,
+      msg:'',
       token: this.$route.params.token,
       userId: this.$route.params.id
     }
@@ -44,12 +46,14 @@ export default {
       'checkEmail'
     ]),
     sendEmail () {
-      console.log(this.email)
-      if (this.email.length > 3)
-        if (this.checkEmail({email: this.email}))
-          this.showMsg = 'An email has been sent to you'
-        else
-          this.showMsg = 'Invalid email'
+      this.checkEmail({email: this.email})
+        .then((response) => {
+          this.msg = 'An email has been sent to you'
+          console.log('OK')
+        }, (error) => {
+          this.msg = 'Invalid email'
+        })
+      this.showMsg = true
     }
   }
 }

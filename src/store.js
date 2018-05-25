@@ -144,12 +144,13 @@ export const store = new Vuex.Store({
       })
     },
     checkEmail ({commit}, email) {
-      return new Promise((resolve) => {
+      return new Promise((resolve, reject) => {
         axios.post('http://127.0.0.1:8000/forgotpassword', email)
           .then((response) => {
-            console.log(response)
+            resolve(response)
+          }, (error) => {
+            reject(error)
           })
-          .catch(error => console.log(error))
       })
     }
   },
