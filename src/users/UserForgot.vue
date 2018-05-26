@@ -1,59 +1,100 @@
 <template>
   <div class="container card card-shadowed px-50 py-30">
 
-    <form class="form-recover" v-if="!token">
+    <form v-if="!show" class="form-recover">
       <h2>Recover your account</h2>
       <div class="form-group">
         <label for="email">Account email:</label>
-        <input type="email" id="email" v-model="email" class="form-control">
+        <input v-model="email" type="email" id="email" class="form-control">
       </div>
       <input type="submit" @click.prevent="sendEmail" class="btn btn-primary btn-block" value="Submit">
-      <span v-if="showMsg">{{msg}}</span>
     </form>
 
-    <form class="form-forgot" v-if="token">
+    <form v-if="showMsg" class="form-invalid">
+      <span>{{msg}}</span>
+    </form>
+
+    <form v-if="valid && show" class="form-forgot">
       <h2>Create new password:</h2>
       <div class="form-group">
         <label for="new_pass">New password:</label>
-        <input type="password" id="new_pass" class="form-control">
+        <input v-model="password" type="password" id="new_pass" class="form-control">
       </div>
       <div class="form-group">
         <label for="confirm">Confirm new password:</label>
         <input type="password" id="confirm" class="form-control">
       </div>
 
-      <input type="submit" class="btn btn-primary btn-block" value="Submit">
+      <input type="submit" @click.prevent="sendPassword" class="btn btn-primary btn-block" value="Submit">
     </form>
+    <v-dialog/>
   </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
+import router from '../router'
 
 export default {
   name: 'UserForgot',
   data () {
     return {
+      valid: false,
+      show: false,
       email: '',
+      password: '',
       showMsg: false,
-      msg:'',
+      msg: '',
       token: this.$route.params.token,
       userId: this.$route.params.id
     }
   },
+  created () {
+    if (this.token) {
+      this.checkToken({id: this.userId, token: this.token})
+        .then((response) => {
+          this.show = true
+          this.valid = true
+        }, (error) => {
+          this.msg = 'The page you are looking for does not exist'
+          this.valid = false
+          this.show = true
+          this.showMsg = true
+        })
+    }
+
+  },
   methods: {
     ...mapActions([
-      'checkEmail'
+      'checkEmail',
+      'checkToken',
+      'login',
+      'changePassword'
     ]),
     sendEmail () {
       this.checkEmail({email: this.email})
         .then((response) => {
-          this.msg = 'An email has been sent to you'
+          this.$modal.show('dialog', {
+            title: 'An email has been sent to you.'
+          })
           console.log('OK')
         }, (error) => {
-          this.msg = 'Invalid email'
+          this.$modal.show('dialog', {
+            title: 'Invalid email.'
+          })
         })
-      this.showMsg = true
+    },
+    sendPassword () {
+      this.changePassword({id: this.userId, token: this.token, password: this.password})
+        .then((response) => {
+          router.replace('/')
+          console.log('OK')
+        }, (error) => {
+          this.$modal.show('dialog', {
+            title: 'OOPS!',
+            text: 'Something went wrong'
+          })
+        })
     }
   }
 }

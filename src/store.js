@@ -152,6 +152,26 @@ export const store = new Vuex.Store({
             reject(error)
           })
       })
+    },
+    checkToken ({commit}, tokenData) {
+      return new Promise((resolve, reject) => {
+        axios.post('http://127.0.0.1:8000/forgotpassword/check', tokenData)
+          .then((response) => {
+            resolve(response)
+          }, (error) => {
+            reject(error)
+          })
+      })
+    },
+    changePassword ({commit}, userData) {
+      return new Promise((resolve, reject) => {
+        axios.post('http://127.0.0.1:8000/forgotpassword/new', userData)
+          .then((response) => {
+            resolve(response)
+          }, (error) => {
+            reject(error)
+          })
+      })
     }
   },
   getters: {
