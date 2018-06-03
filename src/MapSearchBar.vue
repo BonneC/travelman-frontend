@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="search-locations">
+    <div class="search-locations form-type-round">
       <div class="input-group">
 
         <input id="searchTextField"
@@ -130,3 +130,10 @@ export default {
   }
 }
 </script>
+
+<style>
+  #searchTextField {
+    border: 2px solid #33cabb;
+    padding: 16px;
+  }
+</style>

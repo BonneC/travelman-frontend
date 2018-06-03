@@ -1,33 +1,47 @@
 <template>
-  <div class="container card card-shadowed px-50 py-30">
+  <div class="px-80 py-30">
+    <h4>Login</h4>
+    <p>
+      <small>Sign into your account</small>
+    </p>
+    <br>
 
-    <form class="form-signin">
-      <h2 class="form-signin-heading">Please sign in</h2>
+    <form>
       <div class="form-group">
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" v-model="userData.email" id="inputEmail" class="form-control" placeholder="Email address"
+        <label for="inputEmail">Email address</label>
+        <input type="text" class="form-control" v-model="userData.email" id="inputEmail" placeholder="Email address"
                required autofocus>
       </div>
+
       <div class="form-group">
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" v-model="userData.password" id="inputPassword" class="form-control"
+        <label for="inputPassword">Password</label>
+        <input type="password" class="form-control" v-model="userData.password" id="inputPassword"
                placeholder="Password" required>
       </div>
 
-      <div class="form-group">
-        <router-link to="/forgot" class="text-muted hover-primary">Forgot password?</router-link>
+      <div class="form-group flexbox">
+        <router-link class="text-muted hover-primary fs-13" to="/forgot">Forgot password?</router-link>
       </div>
 
-      <button class="btn btn-lg btn-primary btn-block"
-              type="submit" @click.prevent="onSubmit">Sign in
-      </button>
+      <div class="form-group">
+        <button class="btn btn-bold btn-block btn-primary" type="submit" @click.prevent="onSubmit">
+          Login
+        </button>
+      </div>
     </form>
 
+    <hr class="w-30px">
+
+    <p class="text-center text-muted fs-13 mt-20">Don't have an account?
+      <router-link class="text-primary fw-500" to="/join">Sign up</router-link>
+    </p>
   </div>
+
 </template>
 
 <script>
 export default {
+  name: 'UserLogin',
   data () {
     return {
       userData: {

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="main-map-container">
     <div class="google-map" id="gmap"></div>
     <!--<modal name="edit-location" @before-open="beforeOpen">-->
     <!--<button>Delete</button>-->
@@ -25,6 +25,8 @@ export default {
   },
   created () {
     this.fetchLocations()
+
+    window.onresize = this.changeMapHeight
   },
   computed: {
     locationsprob () {
@@ -238,6 +240,8 @@ export default {
         }
       ]
     })
+
+    this.changeMapHeight()
   },
   methods: {
     ...mapActions([
@@ -309,15 +313,25 @@ export default {
           that.show(feature)
         })
       })
+    },
+    changeMapHeight () {
+      let mapDom = document.getElementById('gmap')
+      mapDom.style.height = (window.innerHeight - 120) + 'px'
     }
   }
 }
 </script>
 
 <style>
+  @media screen and (min-width: 768px) {
+    .main-map-container {
+      margin: -40px -30px 1px;
+    }
+  }
+
   .google-map {
     width: 100%;
-    height: 735px;
+    height: 800px;
     margin: 0 auto;
     background: gray;
   }

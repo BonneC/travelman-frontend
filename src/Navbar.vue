@@ -1,17 +1,18 @@
 <template>
   <div>
-    <header class="topbar topbar-expand-lg">
+
+    <header class="topbar topbar-inverse topbar-expand-lg">
       <div class="topbar-left">
         <span class="topbar-btn topbar-menu-toggler"><i>&#9776;</i></span>
-        <router-link to="/">
-          <img src="./assets/logo.png" style="margin:5px; max-height: 80px;" alt="">
+        <router-link to="/" class="topbar-brand">
+          <img src="./assets/img/travelman-logo1.png" style="margin:5px; max-height: 60px;" alt="">
         </router-link>
       </div>
 
       <div class="topbar-right">
         <nav class="topbar-navigation">
           <ul class="menu">
-            <li v-if="auth" class="menu-item active">
+            <li v-if="auth" class="menu-item active open">
               <router-link to="/" class="menu-link">
                 <span class="icon ti-home"></span>
                 <span class="title">Home</span>
@@ -24,7 +25,7 @@
               </router-link>
             </li>
             <li v-if="!auth" class="menu-item">
-              <router-link to="/login" class="menu-link">
+              <router-link to="/" class="menu-link">
                 <span class="icon ti-shift-right"></span>
                 <span class="title">Sign In</span>
               </router-link>
@@ -60,7 +61,6 @@
         </nav>
       </div>
     </header>
-
   </div>
 </template>
 
@@ -83,5 +83,4 @@ export default {
 </script>
 
 <style>
-
 </style>
