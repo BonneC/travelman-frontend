@@ -64,7 +64,6 @@ export default {
           this.showMsg = true
         })
     }
-
   },
   methods: {
     ...mapActions([

@@ -106,17 +106,14 @@ export default {
       if (this.change_pass) {
         if (this.new_password !== this.conf_new_password) {
           alert('passwords dont mech')
-        }
-        else {
+        } else {
           userData = {
             change: 1,
             old_password: this.old_password,
             new_password: this.new_password
           }
-
         }
-      }
-      else {
+      } else {
         userData = {
           change: 0,
           first_name: this.first_name,
