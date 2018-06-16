@@ -17,49 +17,38 @@
           <ul class="flexbox flex-justified text-center p-20">
             <li class="br-1 border-light">
               <span class="text-muted">Locations visited</span><br>
-              <span class="fs-22">18</span>
+              <span class="fs-22">{{ visitedCount }}</span>
             </li>
             <li class="br-1 border-light">
               <span class="text-muted">Planned visits</span><br>
-              <span class="fs-22">426</span>
+              <span class="fs-22">{{ plannedCount }}</span>
             </li>
           </ul>
         </div>
       </div>
       <div class="col-md-9">
+        <div class="card">
+          <h4 class="card-title">Locations Log</h4>
 
-        <div class="media-list media-list-divided media-list-hover">
-          <div class="media">
-            <a class="avatar avatar-lg status-success" href="#">
-              <img src="../assets/logo.png" alt="...">
-            </a>
+          <div class="card-body">
+            <div class="media-list media-list-divided media-list-hover">
+              <div class="media" v-for="(location, keyIndex) in locations" v-bind:key="keyIndex">
+                <a class="avatar avatar-lg" href="#">
+                  <img src="../assets/marker_completed.png" v-if="location.completed" alt="...">
+                  <img src="../assets/marker_uncompleted.png" v-if="!location.completed" alt="...">
+                </a>
 
-            <div class="media-body">
-              <p>
-                <a class="hover-primary" href="#"><strong>Random Location</strong></a>
-                <small class="sidetitle">Info</small>
-              </p>
-              <p>Other</p>
-            </div>
-
-            <div class="media-right gap-items">
-              <a class="media-action lead" href="#" data-provide="tooltip" title="Orders"><i
-                class="ti-shopping-cart"></i></a>
-              <a class="media-action lead" href="#" data-provide="tooltip" title="Receipts"><i
-                class="ti-receipt"></i></a>
-              <div class="btn-group">
-                <a class="media-action lead" href="#" data-toggle="dropdown"><i
-                  class="ti-more-alt rotate-90"></i></a>
-                <div class="dropdown-menu dropdown-menu-right">
-                  <a class="dropdown-item" href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
-                  <a class="dropdown-item" href="#"><i class="fa fa-fw fa-comments"></i> Messages</a>
-                  <a class="dropdown-item" href="#"><i class="fa fa-fw fa-phone"></i> Call</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#"><i class="fa fa-fw fa-remove"></i> Remove</a>
+                <div class="media-body">
+                  <p>
+                    <a class="hover-primary" href="#"><strong>{{ location.address }}</strong></a>
+                    <small class="sidetitle">{{ location.created_at }}</small>
+                  </p>
+                  <p>{{ location.completed ? 'I\'ve been here' : 'I plan to visit' }}</p>
                 </div>
-              </div>
 
+              </div>
             </div>
+
           </div>
         </div>
 
@@ -78,12 +67,29 @@ export default {
   computed: {
     userinfo () {
       return this.$store.getters.getUserInfo
+    },
+    locations () {
+      return this.$store.getters.getLocations
+    },
+    visitedCount () {
+      return this.$store.getters.getVisitedCount
+    },
+    plannedCount () {
+      return this.$store.getters.getPlannedCount
     }
   },
   methods: {
     ...mapActions([
-      'fetchUser'
+      'fetchUser',
+      'fetchLocations',
+      'fetchVisitedCount',
+      'fetchPlannedCount'
     ])
+  },
+  created () {
+    this.fetchLocations()
+    this.fetchVisitedCount()
+    this.fetchPlannedCount()
   }
 }
 </script>

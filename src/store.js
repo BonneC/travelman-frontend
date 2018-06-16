@@ -11,7 +11,9 @@ export const store = new Vuex.Store({
   state: {
     isLogged: null,
     locations: null,
-    userInfo: null
+    userInfo: null,
+    visitedCount: null,
+    plannedCount: null
   },
   mutations: {
     initializeStore (state) {
@@ -37,6 +39,12 @@ export const store = new Vuex.Store({
     },
     setLocations (state, data) {
       state.locations = data.locs
+    },
+    setVisited (state, data) {
+      state.visitedCount = data.value
+    },
+    setPlanned (state, data) {
+      state.plannedCount = data.value
     },
     removeLocation (state, data) {
       state.locations.forEach((location) => {
@@ -143,6 +151,26 @@ export const store = new Vuex.Store({
           .catch(error => console.log(error))
       })
     },
+    fetchVisitedCount ({commit, state}) {
+      return new Promise((resolve) => {
+        axios.get('http://127.0.0.1:8000/' + localStorage.userId + '/locations/visited/count')
+          .then((response) => {
+            commit('setVisited', {value: response.data.count})
+            resolve()
+          })
+          .catch(error => console.log(error))
+      })
+    },
+    fetchPlannedCount ({commit, state}) {
+      return new Promise((resolve) => {
+        axios.get('http://127.0.0.1:8000/' + localStorage.userId + '/locations/planned/count')
+          .then((response) => {
+            commit('setPlanned', {value: response.data.count})
+            resolve()
+          })
+          .catch(error => console.log(error))
+      })
+    },
     checkEmail ({commit}, email) {
       return new Promise((resolve, reject) => {
         axios.post('http://127.0.0.1:8000/forgotpassword', email)
@@ -183,6 +211,12 @@ export const store = new Vuex.Store({
     },
     getUserInfo (state) {
       return state.userInfo || 'userInfo'
+    },
+    getVisitedCount (state) {
+      return state.visitedCount
+    },
+    getPlannedCount (state) {
+      return state.plannedCount
     }
   }
 })
