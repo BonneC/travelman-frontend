@@ -2,7 +2,7 @@
   <div>
 
     <div id="navbar-mobile" v-if="displayMobileNavbar">
-      <h3><a href="#" @click="toggleMobileNavbar">&times;</a></h3>
+      <h3><a href="#" @click="toggleMobileNavbar">Close &times;</a></h3>
       <hr>
       <div class="media-list media-list-hover media-list-divided">
 
@@ -26,7 +26,7 @@
         </router-link>
 
         <router-link v-if="auth" to="/settings" class="media media-single" v-on:click.native="toggleMobileNavbar">
-          <span class="title">Actual Settings</span>
+          <span class="title">Account Settings</span>
         </router-link>
 
         <a v-if="auth" class="media media-single" href="#" @click="onLogout(); toggleMobileNavbar()">
@@ -76,13 +76,8 @@
                 <li class="menu-item">
                   <a class="menu-link" href="#">
                     <router-link to="/settings" class="menu-link">
-                      <span class="title">Actual Settings</span>
+                      <span class="title">Account Settings</span>
                     </router-link>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a class="menu-link" href="#">
-                    <span class="title">Topbar</span>
                   </a>
                 </li>
                 <li class="menu-item">
@@ -139,7 +134,8 @@ export default {
 
   #navbar-mobile h3 a {
     display: inline-block;
-    padding: 5px 10px;
+    padding: 5px 20px;
+    font-size: 25px;
     float: right;
   }
 </style>
