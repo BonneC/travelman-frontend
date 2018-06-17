@@ -36,6 +36,11 @@ export default {
   watch: {
     locationsprob: function (val, oldVal) {
       this.setMarkers(val)
+
+      if (val.length > oldVal.length) {
+        let lastMarker = val[val.length - 1]
+        this.map.panTo(new google.maps.LatLng(lastMarker.lat, lastMarker.lng))
+      }
     }
   },
   mounted () {
@@ -244,24 +249,6 @@ export default {
     })
 
     this.changeMapHeight()
-
-    let sw = new google.maps.LatLng(-76.99619, -104.318148)
-    let ne = new google.maps.LatLng(79.965092, 162.417726)
-    let bounds = new google.maps.LatLngBounds(sw, ne)
-    //this.map.fitBounds(bounds)
-
-    let lastValidCenter = this.map.getCenter()
-
-    let that = this
-    google.maps.event.addListener(this.map, 'center_changed', function () {
-      if (bounds.contains(that.map.getCenter())) {
-        // still within valid bounds, so save the last valid position
-        lastValidCenter = that.map.getCenter()
-        return
-      }
-      // not valid anymore => return to last valid position
-      that.map.panTo(lastValidCenter)
-    })
 
   },
   methods: {

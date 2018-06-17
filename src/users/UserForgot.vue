@@ -28,7 +28,7 @@
 
         <input type="submit" @click.prevent="sendPassword" class="btn btn-primary btn-block" value="Submit">
       </form>
-      <v-dialog/>
+      <v-dialog :clickToClose="false"/>
     </div>
   </div>
 </template>
@@ -76,14 +76,33 @@ export default {
       this.checkEmail({email: this.email})
         .then((response) => {
           this.$modal.show('dialog', {
-            title: 'An email has been sent to you.'
+            title: 'An email has been sent to you.',
+            buttons: [
+              {
+                title: 'Close',
+                handler: () => {
+                  router.replace('/')
+                }
+              }
+            ]
           })
           console.log('OK')
         }, (error) => {
           this.$modal.show('dialog', {
-            title: 'Invalid email.'
+            title: 'Invalid email.',
+            buttons: [
+              {
+                title: 'Close',
+                handler: () => {
+                  this.redirect()
+                }
+              }
+            ],
           })
         })
+    },
+    redirect () {
+      this.$modal.hide('dialog')
     },
     sendPassword () {
       this.changePassword({id: this.userId, token: this.token, password: this.password})
