@@ -173,7 +173,7 @@ export default {
 
   @media screen and (min-width: 992px) {
     .left-border {
-      border-left: 1px solid #ebebeb;
+      border-left: 1px solid #ebebeb !important;
       padding-left: 20px;
       margin-top: 40px;
     }
