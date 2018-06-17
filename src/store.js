@@ -111,6 +111,20 @@ export const store = new Vuex.Store({
           .catch(error => console.log(error))
       })
     },
+    updateAvatar ({commit, state}, avatarData) {
+      return new Promise((resolve) => {
+        return axios.post('http://127.0.0.1:8000/' + localStorage.userId + '/avatar', avatarData, {
+          headers: {
+            Accept: 'application/json',
+            Authorization: 'Bearer ' + localStorage.getItem('idToken')
+          }
+        }).then((response) => {
+          resolve()
+        }).catch((error) => {
+          console.log('error')
+        })
+      })
+    },
     fetchLocations ({commit, state}) {
       return new Promise((resolve) => {
         axios.get('http://127.0.0.1:8000/' + localStorage.userId + '/locations')
