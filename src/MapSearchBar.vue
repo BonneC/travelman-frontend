@@ -21,16 +21,15 @@
 
     <modal name="save-location">
       <form class="form container-fluid">
-        <h3>Location {{address}}</h3>
+        <h3>Location: {{address}}</h3>
         <div class="row">
-          <div class="col-sm-12">
-            <label><input type="radio" name="completed" v-model="completed" value="1"> I've been here</label>
-          </div>
           <div class="col-sm-12">
             <label><input type="radio" name="completed" v-model="completed" value="0" checked="checked">
               I want to go here</label>
           </div>
-          <span>Picked: {{ completed }}</span>
+          <div class="col-sm-12">
+            <label><input type="radio" name="completed" v-model="completed" value="1"> I've been here</label>
+          </div>
           <div class="col-sm-12">
             <button class="btn btn-primary" type="submit" @click.prevent="onSubmit">
               Save Location

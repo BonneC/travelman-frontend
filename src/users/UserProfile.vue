@@ -42,6 +42,7 @@
                   <p>
                     <a class="hover-primary" href="#"><strong>{{ location.address }}</strong></a>
                     <small class="sidetitle">{{ location.created_at }}</small>
+                    <button @click.prevent="deleteLocation(location.id)">Delete</button>
                   </p>
                   <p>{{ location.completed ? 'I\'ve been here' : 'I plan to visit' }}</p>
                 </div>
@@ -83,13 +84,15 @@ export default {
       'fetchUser',
       'fetchLocations',
       'fetchVisitedCount',
-      'fetchPlannedCount'
+      'fetchPlannedCount',
+      'deleteLocation'
     ])
   },
   created () {
     this.fetchLocations()
     this.fetchVisitedCount()
     this.fetchPlannedCount()
-  }
+  },
+
 }
 </script>

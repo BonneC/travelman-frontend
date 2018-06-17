@@ -40,8 +40,10 @@ export default {
   },
   mounted () {
     this.map = new google.maps.Map(document.getElementById('gmap'), {
-      zoom: 3,
-      center: new google.maps.LatLng(29.1394562, 8.1543387),
+      zoom: 2.5,
+      maxZoom: 10,
+      minZoom: 2.5,
+      center: new google.maps.LatLng(32.0939, 7.202883),
       disableDefaultUI: true,
       styles: [
         {
@@ -242,6 +244,25 @@ export default {
     })
 
     this.changeMapHeight()
+
+    let sw = new google.maps.LatLng(-76.99619, -104.318148)
+    let ne = new google.maps.LatLng(79.965092, 162.417726)
+    let bounds = new google.maps.LatLngBounds(sw, ne)
+    //this.map.fitBounds(bounds)
+
+    let lastValidCenter = this.map.getCenter()
+
+    let that = this
+    google.maps.event.addListener(this.map, 'center_changed', function () {
+      if (bounds.contains(that.map.getCenter())) {
+        // still within valid bounds, so save the last valid position
+        lastValidCenter = that.map.getCenter()
+        return
+      }
+      // not valid anymore => return to last valid position
+      that.map.panTo(lastValidCenter)
+    })
+
   },
   methods: {
     ...mapActions([
@@ -252,21 +273,20 @@ export default {
     show (locationData) {
       this.$modal.show('dialog', {
         title: locationData.address,
-        text: locationData.lat,
         buttons: [
-          {
-            title: 'Delete',
-            handler: () => {
-              if (this.deleteLocation(locationData.id)) {
-                this.hide()
-              }
-            }
-          },
           {
             title: 'I\'ve been here',
             handler: () => {
               locationData.completed = 1
               if (this.updateLocation(locationData)) {
+                this.hide()
+              }
+            }
+          },
+          {
+            title: 'Delete',
+            handler: () => {
+              if (this.deleteLocation(locationData.id)) {
                 this.hide()
               }
             }
@@ -311,6 +331,7 @@ export default {
 
         google.maps.event.addListener(marker, 'click', function () {
           that.show(feature)
+          that.map.panTo(position)
         })
       })
     },
@@ -335,4 +356,5 @@ export default {
     margin: 0 auto;
     background: gray;
   }
+
 </style>
