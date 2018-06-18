@@ -63,9 +63,15 @@
                       <p>
                         <a class="hover-primary" href="#"><strong>{{ location.address }}</strong></a>
                         <small class="sidetitle">{{ location.created_at }}</small>
-                        <button @click.prevent="deleteLocation(location.id)">Delete</button>
                       </p>
                       <p>{{ location.completed ? 'I\'ve been here' : 'I plan to visit' }}</p>
+                    </div>
+
+                    <div class="media-right gap-items">
+                      <a class="media-action lead hover-danger" href="#/user" data-provide="tooltip" title="Delete"
+                         @click.prevent="deleteLocation(location.id)">
+                        <i class="ti-trash"></i> Delete
+                      </a>
                     </div>
 
                   </div>

@@ -108,4 +108,14 @@ export default {
   .signup-bg {
     background-image: url(../assets/img/signup-back.jpg);
   }
+
+  .min-h-fullscreen {
+    min-height: calc(100vh - 125px) !important;
+  }
+
+  @media screen and (min-width: 768px) {
+    .home-fullscreen {
+      margin: -36px -30px 5px !important;
+    }
+  }
 </style>
