@@ -139,6 +139,11 @@ export default {
       conf_new_password: ''
     }
   },
+  watch: {
+    userInfo: function (val, oldVal) {
+      this.setUserInfo()
+    }
+  },
   computed: {
     userInfo () {
       return this.$store.getters.getUserInfo
@@ -152,15 +157,18 @@ export default {
     }
   },
   mounted () {
-    this.first_name = this.userInfo.first_name
-    this.last_name = this.userInfo.last_name
-    this.email = this.userInfo.email
+    this.setUserInfo()
   },
   methods: {
     ...mapActions([
       'fetchUser',
       'updateUser'
     ]),
+    setUserInfo () {
+      this.first_name = this.userInfo.first_name
+      this.last_name = this.userInfo.last_name
+      this.email = this.userInfo.email
+    },
     enableEdit () {
       this.edit = true
     },
