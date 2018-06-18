@@ -188,9 +188,14 @@ export default {
         }
         this.disableEdit()
       }
-      this.updateUser(userData).catch(function (error) {
-        console.error(error)
-      })
+      this.updateUser(userData)
+        .then((response) => {
+          this.$emit('showAlert', 'Saved changes')
+        })
+        .catch(function (error) {
+          this.$emit('showError', 'Unsuccessful. Try again!')
+          console.error(error)
+        })
     },
     changePass () {
 

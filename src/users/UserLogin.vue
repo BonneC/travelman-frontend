@@ -40,6 +40,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   name: 'UserLogin',
   data () {
@@ -53,9 +55,18 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['login']),
     onSubmit () {
       this.isSubmitted = true
-      this.$store.dispatch('login', this.userData)
+      // this.$store.dispatch('login', this.userData)
+      this.login(this.userData)
+        .then((response) => {
+          this.$emit('showAlert', 'Successfully logged in!')
+        })
+        .catch((error) => {
+          console.log(error)
+          this.$emit('showError', 'Unsuccessful login! Try again.')
+        })
     }
   }
 }

@@ -17,7 +17,7 @@
         </div>
 
         <div class="col-md-6 col-lg-5 col-xl-4 align-self-center">
-          <user-login></user-login>
+          <user-login v-on:showAlert="showAlert($event)" v-on:showError="showError($event)"></user-login>
         </div>
       </div>
     </div>
@@ -40,6 +40,14 @@ export default {
   computed: {
     auth () {
       return this.$store.getters.isAuthenticated
+    }
+  },
+  methods: {
+    showAlert (message) {
+      this.$emit('showAlert', message)
+    },
+    showError (message) {
+      this.$emit('showError', message)
     }
   }
 }

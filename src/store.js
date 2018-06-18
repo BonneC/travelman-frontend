@@ -57,23 +57,34 @@ export const store = new Vuex.Store({
   },
   actions: {
     signup ({commit, dispatch}, authData) {
-      axios.post('http://127.0.0.1:8000/user', authData)
-        .then((response) => {
-          commit('authUser', {token: response.data.access_token})
-          dispatch('fetchUser')
-          router.replace('/')
-        })
-        .catch(error => console.log(error))
+      return new Promise((resolve, reject) => {
+        return axios.post('http://127.0.0.1:8000/user', authData)
+          .then((response) => {
+            commit('authUser', {token: response.data.access_token})
+            dispatch('fetchUser')
+            router.replace('/')
+            resolve(response)
+          })
+          .catch(error => {
+            console.log(error)
+            reject(error)
+          })
+      })
     },
     login ({commit, dispatch}, authData) {
-      axios.post('http://127.0.0.1:8000/auth/login', authData)
-        .then((response) => {
-          commit('authUser', {token: response.data.access_token})
-          router.replace('/')
-          dispatch('fetchLocations')
-          dispatch('fetchUser')
-        })
-        .catch(error => console.log(error))
+      return new Promise((resolve, reject) => {
+        return axios.post('http://127.0.0.1:8000/auth/login', authData)
+          .then((response) => {
+            commit('authUser', {token: response.data.access_token})
+            router.replace('/')
+            dispatch('fetchLocations')
+            dispatch('fetchUser')
+            resolve(response)
+          })
+          .catch((error) => {
+            reject(error)
+          })
+      })
     },
     logout ({commit}) {
       commit('clearAuthData')
@@ -95,7 +106,7 @@ export const store = new Vuex.Store({
         })
     },
     updateUser ({commit, state, dispatch}, userInfo) {
-      return new Promise((resolve) => {
+      return new Promise((resolve, reject) => {
         axios.put('http://127.0.0.1:8000/user', userInfo, {
           headers: {
             Accept: 'application/json',
@@ -105,8 +116,12 @@ export const store = new Vuex.Store({
           .then((response) => {
             console.log(response.data)
             dispatch('fetchUser')
+            resolve(response)
           })
-          .catch(error => console.log(error))
+          .catch(error => {
+            console.log(error)
+            reject(error)
+          })
       })
     },
     updateAvatar ({commit, state}, avatarData) {
@@ -116,15 +131,17 @@ export const store = new Vuex.Store({
             Accept: 'application/json',
             Authorization: 'Bearer ' + localStorage.getItem('idToken')
           }
-        }).then((response) => {
-          resolve(response)
-        }).catch((error) => {
-          reject(error)
         })
+          .then((response) => {
+            resolve(response)
+          })
+          .catch((error) => {
+            reject(error)
+          })
       })
     },
     fetchLocations ({commit, state}) {
-      return new Promise((resolve) => {
+      return new Promise((resolve, reject) => {
         axios.get('http://127.0.0.1:8000/' + localStorage.userId + '/locations', {
           headers: {
             Accept: 'application/json',
@@ -133,13 +150,16 @@ export const store = new Vuex.Store({
         })
           .then((response) => {
             commit('setLocations', {locs: response.data})
-            resolve()
+            resolve(response)
           })
-          .catch(error => console.log(error))
+          .catch(error => {
+            console.log(error)
+            reject(error)
+          })
       })
     },
     addLocation ({state, dispatch}, location) {
-      return new Promise((resolve) => {
+      return new Promise((resolve, reject) => {
         axios.post('http://127.0.0.1:8000/' + localStorage.userId + '/locations', location, {
           headers: {
             Accept: 'application/json',
@@ -149,12 +169,16 @@ export const store = new Vuex.Store({
           .then((response) => {
             console.log(response)
             dispatch('fetchLocations')
+            resolve(response)
           })
-          .catch(error => console.log(error))
+          .catch((error) => {
+            console.log(error)
+            reject(error)
+          })
       })
     },
     deleteLocation ({commit, state}, locationId) {
-      return new Promise((resolve) => {
+      return new Promise((resolve, reject) => {
         axios.delete('http://127.0.0.1:8000/' + localStorage.userId + '/locations/' + locationId, {
           headers: {
             Accept: 'application/json',
@@ -164,12 +188,16 @@ export const store = new Vuex.Store({
           .then((response) => {
             console.log(response)
             commit('removeLocation', {id: locationId})
+            resolve(response)
           })
-          .catch(error => console.log(error))
+          .catch(error => {
+            console.log(error)
+            reject(error)
+          })
       })
     },
     updateLocation ({commit, state, dispatch}, locationData) {
-      return new Promise((resolve) => {
+      return new Promise((resolve, reject) => {
         axios.put('http://127.0.0.1:8000/' + localStorage.userId + '/locations/' + locationData.id, locationData, {
           headers: {
             Accept: 'application/json',
@@ -179,18 +207,24 @@ export const store = new Vuex.Store({
           .then((response) => {
             dispatch('fetchLocations')
             console.log(response)
+            resolve(response)
           })
-          .catch(error => console.log(error))
+          .catch(error => {
+            console.log(error)
+            reject(error)
+          })
       })
     },
     fetchVisitedCount ({commit, state}) {
-      return new Promise((resolve) => {
+      return new Promise((resolve, reject) => {
         axios.get('http://127.0.0.1:8000/' + localStorage.userId + '/locations/visited/count')
           .then((response) => {
             commit('setVisited', {value: response.data.count})
-            resolve()
+            resolve(response)
           })
-          .catch(error => console.log(error))
+          .catch(error => {
+            reject(error)
+          })
       })
     },
     fetchPlannedCount ({commit, state}) {

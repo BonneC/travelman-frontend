@@ -81,6 +81,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   data () {
     return {
@@ -96,9 +98,17 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['signup']),
     onSubmit () {
       this.isSubmitted = true
-      this.$store.dispatch('signup', this.userData)
+      this.signup(this.userData)
+        .then((response) => {
+          this.$emit('showAlert', 'Successfully signed up!')
+        })
+        .catch((error) => {
+          this.$emit('showError', 'Unsuccessful sign up. Try again!')
+          console.log(error)
+        })
     }
   }
 }
