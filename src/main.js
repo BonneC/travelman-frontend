@@ -10,6 +10,7 @@ import router from './router'
 import { store } from './store'
 import VModal from 'vue-js-modal'
 import VeeValidate from 'vee-validate'
+import axios from 'axios'
 
 import './assets/css/core.min.css'
 import './assets/css/app.min.css'
@@ -19,6 +20,8 @@ Vue.config.productionTip = false
 
 Vue.use(VModal, {dialog: true})
 Vue.use(VeeValidate, {errorBagName: 'validationErrors'})
+
+axios.defaults.baseURL = process.env.ROOT_API
 
 Vue.component('app-navbar', Navbar)
 Vue.component('app-gmap', GoogleMap)

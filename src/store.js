@@ -58,7 +58,7 @@ export const store = new Vuex.Store({
   actions: {
     signup ({commit, dispatch}, authData) {
       return new Promise((resolve, reject) => {
-        return axios.post('http://127.0.0.1:8000/user', authData)
+        return axios.post('/user', authData)
           .then((response) => {
             commit('authUser', {token: response.data.access_token})
             dispatch('fetchUser')
@@ -73,7 +73,7 @@ export const store = new Vuex.Store({
     },
     login ({commit, dispatch}, authData) {
       return new Promise((resolve, reject) => {
-        return axios.post('http://127.0.0.1:8000/auth/login', authData)
+        return axios.post('/auth/login', authData)
           .then((response) => {
             commit('authUser', {token: response.data.access_token})
             router.replace('/')
@@ -91,7 +91,7 @@ export const store = new Vuex.Store({
       router.replace('/')
     },
     fetchUser ({commit, state}) {
-      axios.get('http://127.0.0.1:8000/user', {
+      axios.get('/user', {
         headers: {
           Accept: 'application/json',
           Authorization: 'Bearer ' + localStorage.getItem('idToken')
@@ -107,7 +107,7 @@ export const store = new Vuex.Store({
     },
     updateUser ({commit, state, dispatch}, userInfo) {
       return new Promise((resolve, reject) => {
-        axios.put('http://127.0.0.1:8000/user', userInfo, {
+        axios.put('/user', userInfo, {
           headers: {
             Accept: 'application/json',
             Authorization: 'Bearer ' + localStorage.getItem('idToken')
@@ -126,7 +126,7 @@ export const store = new Vuex.Store({
     },
     updateAvatar ({commit, state}, avatarData) {
       return new Promise((resolve, reject) => {
-        return axios.post('http://127.0.0.1:8000/' + localStorage.userId + '/avatar', avatarData, {
+        return axios.post('/' + localStorage.userId + '/avatar', avatarData, {
           headers: {
             Accept: 'application/json',
             Authorization: 'Bearer ' + localStorage.getItem('idToken')
@@ -142,7 +142,7 @@ export const store = new Vuex.Store({
     },
     fetchLocations ({commit, state}) {
       return new Promise((resolve, reject) => {
-        axios.get('http://127.0.0.1:8000/' + localStorage.userId + '/locations', {
+        axios.get('/' + localStorage.userId + '/locations', {
           headers: {
             Accept: 'application/json',
             Authorization: 'Bearer ' + localStorage.getItem('idToken')
@@ -160,7 +160,7 @@ export const store = new Vuex.Store({
     },
     addLocation ({state, dispatch}, location) {
       return new Promise((resolve, reject) => {
-        axios.post('http://127.0.0.1:8000/' + localStorage.userId + '/locations', location, {
+        axios.post('/' + localStorage.userId + '/locations', location, {
           headers: {
             Accept: 'application/json',
             Authorization: 'Bearer ' + localStorage.getItem('idToken')
@@ -179,7 +179,7 @@ export const store = new Vuex.Store({
     },
     deleteLocation ({commit, state}, locationId) {
       return new Promise((resolve, reject) => {
-        axios.delete('http://127.0.0.1:8000/' + localStorage.userId + '/locations/' + locationId, {
+        axios.delete('/' + localStorage.userId + '/locations/' + locationId, {
           headers: {
             Accept: 'application/json',
             Authorization: 'Bearer ' + localStorage.getItem('idToken')
@@ -198,7 +198,7 @@ export const store = new Vuex.Store({
     },
     updateLocation ({commit, state, dispatch}, locationData) {
       return new Promise((resolve, reject) => {
-        axios.put('http://127.0.0.1:8000/' + localStorage.userId + '/locations/' + locationData.id, locationData, {
+        axios.put('/' + localStorage.userId + '/locations/' + locationData.id, locationData, {
           headers: {
             Accept: 'application/json',
             Authorization: 'Bearer ' + localStorage.getItem('idToken')
@@ -217,7 +217,7 @@ export const store = new Vuex.Store({
     },
     fetchVisitedCount ({commit, state}) {
       return new Promise((resolve, reject) => {
-        axios.get('http://127.0.0.1:8000/' + localStorage.userId + '/locations/visited/count')
+        axios.get('/' + localStorage.userId + '/locations/visited/count')
           .then((response) => {
             commit('setVisited', {value: response.data.count})
             resolve(response)
@@ -229,7 +229,7 @@ export const store = new Vuex.Store({
     },
     fetchPlannedCount ({commit, state}) {
       return new Promise((resolve) => {
-        axios.get('http://127.0.0.1:8000/' + localStorage.userId + '/locations/planned/count')
+        axios.get('/' + localStorage.userId + '/locations/planned/count')
           .then((response) => {
             commit('setPlanned', {value: response.data.count})
             resolve()
@@ -239,7 +239,7 @@ export const store = new Vuex.Store({
     },
     checkEmail ({commit}, email) {
       return new Promise((resolve, reject) => {
-        axios.post('http://127.0.0.1:8000/forgotpassword', email)
+        axios.post('/forgotpassword', email)
           .then((response) => {
             resolve(response)
           }, (error) => {
@@ -249,7 +249,7 @@ export const store = new Vuex.Store({
     },
     checkToken ({commit}, tokenData) {
       return new Promise((resolve, reject) => {
-        axios.post('http://127.0.0.1:8000/forgotpassword/check', tokenData)
+        axios.post('/forgotpassword/check', tokenData)
           .then((response) => {
             resolve(response)
           }, (error) => {
@@ -259,7 +259,7 @@ export const store = new Vuex.Store({
     },
     changePassword ({commit}, userData) {
       return new Promise((resolve, reject) => {
-        axios.post('http://127.0.0.1:8000/forgotpassword/new', userData)
+        axios.post('/forgotpassword/new', userData)
           .then((response) => {
             resolve(response)
           }, (error) => {

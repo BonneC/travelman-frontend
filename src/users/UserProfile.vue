@@ -146,7 +146,7 @@ export default {
         console.log('')
       }
       let d = new Date()
-      return 'http://localhost:8000/' + this.userinfo.id + '/avatar?' + d.getTime()
+      return process.env.ROOT_API + '/' + this.userinfo.id + '/avatar?' + d.getTime()
     }
   },
   methods: {

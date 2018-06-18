@@ -153,7 +153,7 @@ export default {
         console.log('')
       }
       let d = new Date()
-      return 'http://localhost:8000/' + this.userInfo.id + '/avatar?' + d.getTime()
+      return process.env.ROOT_API + '/' + this.userInfo.id + '/avatar?' + d.getTime()
     }
   },
   mounted () {
