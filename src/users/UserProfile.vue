@@ -18,7 +18,7 @@
                     {{ userinfo.first_name + ' ' + userinfo.last_name }}
                   </span>
                 </h5>
-                <span>{{ userinfo.email }}</span>
+                <span>{{ userinfo.email }}</span><br>
 
                 <router-link to="/settings" class="btn btn-w-xs btn-sm btn-info btn-label mt-20">
                   <label><i class="ti-pencil"></i></label>
@@ -59,14 +59,14 @@
                   </div>
 
                   <div class="media" v-for="(location, keyIndex) in locations" v-bind:key="keyIndex">
-                    <a class="avatar avatar-lg" href="#">
+                    <span class="avatar avatar-lg cursor-pointer">
                       <img src="../assets/marker_completed.png" v-if="location.completed" alt="...">
                       <img src="../assets/marker_uncompleted.png" v-if="!location.completed" alt="...">
-                    </a>
+                    </span>
 
                     <div class="media-body">
                       <p>
-                        <a class="hover-primary" href="#"><strong>{{ location.address }}</strong></a>
+                        <span class="hover-primary cursor-pointer"><strong>{{ location.address }}</strong></span>
                         <small class="sidetitle">{{ location.created_at }}</small>
                       </p>
                       <p>{{ location.completed ? 'I\'ve been here' : 'I plan to visit' }}</p>
@@ -173,9 +173,11 @@ export default {
         .then((response) => {
           console.log('success')
           this.hideEditAvatar()
+          this.$emit('showAlert', 'Successfully updated avatar!')
         })
         .catch((error) => {
-          console.log('error')
+          this.$emit('showError', 'Failed to update avatar! Try again.')
+          console.log(error)
         })
     }
   },

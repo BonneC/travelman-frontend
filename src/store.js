@@ -110,16 +110,16 @@ export const store = new Vuex.Store({
       })
     },
     updateAvatar ({commit, state}, avatarData) {
-      return new Promise((resolve) => {
+      return new Promise((resolve, reject) => {
         return axios.post('http://127.0.0.1:8000/' + localStorage.userId + '/avatar', avatarData, {
           headers: {
             Accept: 'application/json',
             Authorization: 'Bearer ' + localStorage.getItem('idToken')
           }
         }).then((response) => {
-          resolve()
+          resolve(response)
         }).catch((error) => {
-          console.log('error')
+          reject(error)
         })
       })
     },
