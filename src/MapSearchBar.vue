@@ -123,6 +123,8 @@ export default {
         if (this.addLocation(location)) {
           this.hide()
           this.completed = 0
+
+          this.$refs.autocomplete.value = ''
         }
       }
     }

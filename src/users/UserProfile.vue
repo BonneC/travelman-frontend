@@ -8,7 +8,9 @@
               <div class=" card-body bg-img text-center py-50">
                 <div class="avatar-holder">
                   <div class="avatar-hover" @click="editAvatar()"><i class="fa fa-edit"></i><span>Edit</span></div>
-                  <div class="avatar avatar-xxl avatar-bordered" v-bind:style="avatarStyle"></div>
+                  <div class="avatar avatar-xxl avatar-bordered">
+                    <img v-bind:src="avatar" alt="">
+                  </div>
                 </div>
 
                 <h5 class="mt-2 mb-0">
@@ -128,10 +130,12 @@ export default {
     plannedCount () {
       return this.$store.getters.getPlannedCount
     },
-    avatarStyle () {
-      return {
-        background: 'url(http://localhost:8000/' + this.userinfo.id + '/avatar) no-repeat center'
+    avatar () {
+      if (this.showAvatarEdit) {
+        console.log('')
       }
+      let d = new Date()
+      return 'http://localhost:8000/' + this.userinfo.id + '/avatar?' + d.getTime()
     }
   },
   methods: {
@@ -158,7 +162,6 @@ export default {
         .then((response) => {
           console.log('success')
           this.hideEditAvatar()
-          this.$forceUpdate()
         })
         .catch((error) => {
           console.log('error')
@@ -169,7 +172,7 @@ export default {
     this.fetchLocations()
     this.fetchVisitedCount()
     this.fetchPlannedCount()
-  },
+  }
 
 }
 </script>
@@ -188,11 +191,27 @@ export default {
     position: relative;
   }
 
+  .avatar {
+    overflow: hidden;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .avatar img {
+    flex-shrink: 0;
+    border-radius: 0;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+  }
+
   .avatar-hover {
     position: absolute;
     left: 37%;
+    bottom: 5px;
     z-index: 9;
-    top: 36%;
     color: #686868;
     background: #fffc;
     padding: 3px 8px;
@@ -203,10 +222,6 @@ export default {
 
   .avatar-holder:hover .avatar-hover {
     display: inline-block;
-  }
-
-  .avatar {
-    background-size: 96px !important;
   }
 
   .edit-avatar {
