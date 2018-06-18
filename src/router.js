@@ -10,7 +10,6 @@ import UserForgot from './users/UserForgot'
 
 Vue.use(VueRouter)
 
-
 const ifNotAuthenticated = (to, from, next) => {
   if (!store.getters.isAuthenticated) {
     next()
@@ -24,14 +23,13 @@ const ifAuthenticated = (to, from, next) => {
     next()
     return
   }
-  next('/login')
+  next('/')
 }
 
 const routes = [
   {path: '/', component: Home},
   {path: '/join', component: UserSignup, beforeEnter: ifNotAuthenticated},
   {path: '/user', component: UserProfile, beforeEnter: ifAuthenticated},
-  {path: '/login', component: UserLogin, beforeEnter: ifNotAuthenticated},
   {path: '/settings', component: UserSettings, beforeEnter: ifAuthenticated},
   {path: '/forgot/:id/:token', component: UserForgot, beforeEnter: ifNotAuthenticated},
   {path: '/forgot', component: UserForgot, beforeEnter: ifNotAuthenticated}
