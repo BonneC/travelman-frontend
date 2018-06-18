@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from './store'
 import Home from './Home'
 import UserSignup from './users/UserSignup'
 import UserProfile from './users/UserProfile'
@@ -9,14 +10,31 @@ import UserForgot from './users/UserForgot'
 
 Vue.use(VueRouter)
 
+
+const ifNotAuthenticated = (to, from, next) => {
+  if (!store.getters.isAuthenticated) {
+    next()
+    return
+  }
+  next('/')
+}
+
+const ifAuthenticated = (to, from, next) => {
+  if (store.getters.isAuthenticated) {
+    next()
+    return
+  }
+  next('/login')
+}
+
 const routes = [
   {path: '/', component: Home},
-  {path: '/join', component: UserSignup},
-  {path: '/user', component: UserProfile},
-  {path: '/login', component: UserLogin},
-  {path: '/settings', component: UserSettings},
-  {path: '/forgot/:id/:token', component: UserForgot},
-  {path: '/forgot', component: UserForgot}
+  {path: '/join', component: UserSignup, beforeEnter: ifNotAuthenticated},
+  {path: '/user', component: UserProfile, beforeEnter: ifAuthenticated},
+  {path: '/login', component: UserLogin, beforeEnter: ifNotAuthenticated},
+  {path: '/settings', component: UserSettings, beforeEnter: ifAuthenticated},
+  {path: '/forgot/:id/:token', component: UserForgot, beforeEnter: ifNotAuthenticated},
+  {path: '/forgot', component: UserForgot, beforeEnter: ifNotAuthenticated}
 ]
 
 const router = new VueRouter({
