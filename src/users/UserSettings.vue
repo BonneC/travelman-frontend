@@ -32,41 +32,50 @@
                   <div v-if="!change_pass" class="form-group">
                     <label class="col-sm-2 control-label" for="first_name">First Name</label>
                     <div class="col-sm-10">
-                      <input v-model="first_name" class="form-control" name="disabledInput" id="first_name"
-                             type="text"
-                             disabled>
+                      <input v-model="first_name" class="form-control" name="first_name" id="first_name"
+                             type="text" :class="{'input': true, 'is-invalid': validationErrors.has('first_name') }"
+                             v-validate="'required|alpha_spaces'"
+                             :disabled="!edit">
+                      <div class="invalid-feedback">{{ validationErrors.first('first_name') }}</div>
                     </div>
                   </div>
                   <div v-if="!change_pass" class="form-group">
                     <label class="col-sm-2 control-label" for="last_name">Last Name</label>
                     <div class="col-sm-10">
-                      <input v-model="last_name" class="form-control" name="disabledInput" id="last_name"
-                             type="text"
-                             disabled>
+                      <input v-model="last_name" class="form-control" name="last_name" id="last_name"
+                             type="text" :class="{'input': true, 'is-invalid': validationErrors.has('last_name') }"
+                             v-validate="'required|alpha_spaces'"
+                             :disabled="!edit">
+                      <div class="invalid-feedback">{{ validationErrors.first('last_name') }}</div>
                     </div>
                   </div>
                   <div v-if="!change_pass" class="form-group">
                     <label class="col-sm-2 control-label" for="email">Email</label>
                     <div class="col-sm-10">
-                      <input v-model="email" class="form-control" name="disabledInput" id="email" type="text" disabled>
+                      <input v-model="email" class="form-control" name="email" id="email" type="text" :disabled="!edit"
+                             v-validate="'required|email'"
+                             :class="{'input': true, 'is-invalid': validationErrors.has('email') }">
+                      <div class="invalid-feedback">{{ validationErrors.first('email') }}</div>
                     </div>
                   </div>
                   <div v-if="change_pass">
                     <div class="form-group">
                       <label class="col-sm-2 control-label">Old password</label>
                       <div class="col-sm-10">
-                        <input v-model="old_password" class="form-control" name="changePass" id="old_pass" type="text">
+                        <input v-model="old_password" class="form-control" name="changePass" id="old_pass"
+                               type="password">
                       </div>
                     </div>
                     <div class="form-group">
                       <label class="col-sm-2 control-label">New password</label>
                       <div class="col-sm-3">
-                        <input v-model="new_password" class="form-control" name="changePass" id="new_pass" type="text">
+                        <input v-model="new_password" class="form-control" name="changePass" id="new_pass"
+                               type="password">
                       </div>
                       <label class="col-sm-3 control-label">Confirm password</label>
                       <div class="col-sm-4">
                         <input v-model="conf_new_password" class="form-control" name="changePass" id="conf_new_pass"
-                               type="text">
+                               type="password">
                       </div>
                     </div>
                   </div>
@@ -79,13 +88,13 @@
                   </div>
                   <hr>
                   <div v-if="edit" class="form-group">
-                    <button @click.prevent="disableEdit" class="btn btn-w-md btn-warning btn-label">
-                      <label><i class="ti-close"></i></label>
-                      Cancel
-                    </button>
                     <button @click.prevent="saveUser" class="btn btn-w-md btn-primary btn-label">
                       <label><i class="ti-check"></i></label>
                       Save
+                    </button>
+                    <button @click.prevent="disableEdit" class="btn btn-w-md btn-warning btn-label">
+                      <label><i class="ti-close"></i></label>
+                      Cancel
                     </button>
                   </div>
                   <div v-else class="form-group">
@@ -93,7 +102,7 @@
                       <label><i class="ti-pencil"></i></label>
                       Edit
                     </button>
-                    <router-link class="btn btn-w-md btn-info btn-label" to="/user">
+                    <router-link class="btn btn-w-md btn-warning btn-label" to="/user">
                       <label><i class="ti-back-left"></i></label>
                       Back
                     </router-link>
@@ -154,16 +163,14 @@ export default {
     ]),
     enableEdit () {
       this.edit = true
-      document.getElementsByName('disabledInput').forEach((element) => {
-        element.disabled = false
-      })
     },
     disableEdit () {
+      this.old_password = ''
+      this.new_password = ''
+      this.conf_new_password = ''
+
       this.edit = false
       this.change_pass = false
-      document.getElementsByName('disabledInput').forEach((element) => {
-        element.disabled = true
-      })
     },
     saveUser () {
       let userData = null
@@ -175,7 +182,8 @@ export default {
           userData = {
             change: 1,
             old_password: this.old_password,
-            new_password: this.new_password
+            password: this.new_password,
+            password_confirmation: this.conf_new_password
           }
         }
       } else {
@@ -188,17 +196,16 @@ export default {
         }
         this.disableEdit()
       }
+
       this.updateUser(userData)
         .then((response) => {
+          this.disableEdit()
           this.$emit('showAlert', 'Saved changes')
         })
         .catch(function (error) {
           this.$emit('showError', 'Unsuccessful. Try again!')
           console.error(error)
         })
-    },
-    changePass () {
-
     }
   }
 }

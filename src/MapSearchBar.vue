@@ -120,12 +120,20 @@ export default {
           lng: String(this.lng),
           completed: this.completed
         }
-        if (this.addLocation(location)) {
-          this.hide()
-          this.completed = 0
 
-          this.$refs.autocomplete.value = ''
-        }
+        this.addLocation(location)
+          .then((response) => {
+            this.hide()
+            this.completed = 0
+
+            this.$emit('showAlert', 'Succesffuly added ' + location.address)
+
+            this.$refs.autocomplete.value = ''
+          })
+          .catch((error) => {
+            this.$emit('showError', 'Something went wrong')
+            console.log(error.response.data)
+          })
       }
     }
   }

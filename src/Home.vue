@@ -22,7 +22,7 @@
       </div>
     </div>
     <app-gmap v-if="auth"></app-gmap>
-    <app-search v-if="auth"></app-search>
+    <app-search v-if="auth" v-on:showAlert="showAlert($event)" v-on:showError="showError($event)"></app-search>
   </div>
 </template>
 

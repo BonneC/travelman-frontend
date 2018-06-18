@@ -29,14 +29,20 @@
                 <div class="form-group">
                   <label for="first_name">First Name</label>
                   <input type="text" v-model.lazy="userData.firstName" name="first_name" id="first_name"
-                         class="form-control input-lg" placeholder="First Name" tabindex="1">
+                         class="form-control input-lg" placeholder="First Name" tabindex="1" autofocus
+                         :class="{'input': true, 'is-invalid': validationErrors.has('first_name') }"
+                         v-validate="'required|alpha_spaces'">
+                  <div class="invalid-feedback">{{ validationErrors.first('first_name') }}</div>
                 </div>
               </div>
               <div class="col-xs-12 col-sm-6">
                 <div class="form-group">
                   <label for="last_name">Last Name</label>
                   <input type="text" v-model.lazy="userData.lastName" name="last_name" id="last_name"
-                         class="form-control input-lg" placeholder="Last Name" tabindex="2">
+                         class="form-control input-lg" placeholder="Last Name" tabindex="2"
+                         :class="{'input': true, 'is-invalid': validationErrors.has('last_name') }"
+                         v-validate="'required|alpha_spaces'">
+                  <div class="invalid-feedback">{{ validationErrors.first('last_name') }}</div>
                 </div>
               </div>
             </div>
@@ -44,25 +50,32 @@
             <div class="form-group">
               <label for="email">Email Address</label>
               <input type="email" v-model="userData.email" name="email" id="email" class="form-control input-lg"
-                     placeholder="Email Address" tabindex="3">
+                     placeholder="Email Address" tabindex="3" v-validate="'required|email'"
+                     :class="{'input': true, 'is-invalid': validationErrors.has('email') }">
+              <div class="invalid-feedback">{{ validationErrors.first('email') }}</div>
             </div>
 
             <div class="form-group">
               <label for="password">Password</label>
               <input type="password" v-model="userData.password" name="password" id="password"
-                     class="form-control input-lg" placeholder="Password" tabindex="4">
+                     class="form-control input-lg" placeholder="Password" tabindex="4"
+                     v-validate="'required|min:8'"
+                     :class="{'input': true, 'is-invalid': validationErrors.has('password') }">
+              <div class="invalid-feedback">{{ validationErrors.first('password') }}</div>
             </div>
 
             <div class="form-group">
               <label for="password_confirmation">Confirm Password</label>
-              <input type="password" name="password_confirmation" id="password_confirmation"
-                     class="form-control input-lg" placeholder="Confirm Password" tabindex="5">
+              <input type="password" v-model="userData.password_confirmation" name="password_confirmation"
+                     id="password_confirmation" class="form-control input-lg" placeholder="Confirm Password"
+                     tabindex="5">
             </div>
 
             <hr>
 
             <div class="form-group">
-              <button class="btn btn-bold btn-block btn-primary" type="submit" @click.prevent="onSubmit">
+              <button class="btn btn-bold btn-block btn-primary" type="submit" @click.prevent="onSubmit"
+                      :disabled="isFormInvalid">
                 Register
               </button>
             </div>
@@ -90,24 +103,40 @@ export default {
         firstName: '',
         lastName: '',
         email: '',
-        password: ''
+        password: '',
+        password_confirmation: ''
       },
       isSubmitted: false
       // firstName: ''
 
     }
   },
+  computed: {
+    isFormInvalid () {
+      return Object.keys(this.fields).some(key => this.fields[key].invalid)
+    }
+  },
   methods: {
     ...mapActions(['signup']),
     onSubmit () {
       this.isSubmitted = true
+
+      this.$validator.validate().then(result => {
+        if (!result) {
+          return false
+        }
+      })
+
       this.signup(this.userData)
         .then((response) => {
           this.$emit('showAlert', 'Successfully signed up!')
         })
         .catch((error) => {
           this.$emit('showError', 'Unsuccessful sign up. Try again!')
-          console.log(error)
+          for (let key in error.response.data) {
+            this.$emit('showError', error.response.data[key][0])
+          }
+          console.log(error.response.data)
         })
     }
   }

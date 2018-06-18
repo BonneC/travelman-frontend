@@ -9,6 +9,7 @@ import router from './router'
 
 import { store } from './store'
 import VModal from 'vue-js-modal'
+import VeeValidate from 'vee-validate'
 
 import './assets/css/core.min.css'
 import './assets/css/app.min.css'
@@ -17,6 +18,7 @@ import './assets/css/style.min.css'
 Vue.config.productionTip = false
 
 Vue.use(VModal, {dialog: true})
+Vue.use(VeeValidate, {errorBagName: 'validationErrors'})
 
 Vue.component('app-navbar', Navbar)
 Vue.component('app-gmap', GoogleMap)

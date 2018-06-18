@@ -20,7 +20,7 @@
                 </h5>
                 <span>{{ userinfo.email }}</span><br>
 
-                <router-link to="/settings" class="btn btn-w-xs btn-sm btn-info btn-label mt-20">
+                <router-link to="/settings" class="btn btn-w-xs btn-sm btn-primary btn-label mt-20">
                   <label><i class="ti-pencil"></i></label>
                   Edit
                 </router-link>

@@ -66,7 +66,7 @@ export default {
         that.alerts.splice(
           that.alerts.indexOf(message), 1
         )
-      }, 3000)
+      }, 5000)
     },
     destroyAlert (index) {
       this.alerts.splice(index, 1)
@@ -79,7 +79,7 @@ export default {
         that.errors.splice(
           that.errors.indexOf(message), 1
         )
-      }, 3000)
+      }, 5000)
     },
     destroyError (index) {
       this.errors.splice(index, 1)

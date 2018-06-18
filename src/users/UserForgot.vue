@@ -23,7 +23,7 @@
         </div>
         <div class="form-group">
           <label for="confirm">Confirm new password:</label>
-          <input type="password" id="confirm" class="form-control">
+          <input v-model="confirmPassword" type="password" id="confirm" class="form-control">
         </div>
 
         <input type="submit" @click.prevent="sendPassword" class="btn btn-primary btn-block" value="Submit">
@@ -45,6 +45,7 @@ export default {
       show: false,
       email: '',
       password: '',
+      confirmPassword: '',
       showMsg: false,
       msg: '',
       token: this.$route.params.token,
@@ -58,6 +59,7 @@ export default {
           this.show = true
           this.valid = true
         }, (error) => {
+          console.log(error.response.data)
           this.msg = 'The page you are looking for does not exist'
           this.valid = false
           this.show = true
@@ -88,6 +90,7 @@ export default {
           })
           console.log('OK')
         }, (error) => {
+          console.log(error.response.data)
           this.$modal.show('dialog', {
             title: 'Invalid email.',
             buttons: [
@@ -97,7 +100,7 @@ export default {
                   this.redirect()
                 }
               }
-            ],
+            ]
           })
         })
     },
@@ -105,11 +108,19 @@ export default {
       this.$modal.hide('dialog')
     },
     sendPassword () {
-      this.changePassword({id: this.userId, token: this.token, password: this.password})
+      let postData = {
+        id: this.userId,
+        token: this.token,
+        password: this.password,
+        password_confirmation: this.confirmPassword
+      }
+
+      this.changePassword(postData)
         .then((response) => {
           router.replace('/')
           console.log('OK')
         }, (error) => {
+          console.log(error)
           this.$modal.show('dialog', {
             title: 'OOPS!',
             text: 'Something went wrong'

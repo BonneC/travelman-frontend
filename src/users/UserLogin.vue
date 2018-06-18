@@ -9,8 +9,10 @@
     <form>
       <div class="form-group">
         <label for="inputEmail">Email address</label>
-        <input type="text" class="form-control" v-model="userData.email" id="inputEmail" placeholder="Email address"
-               required autofocus>
+        <input type="text" class="form-control" v-model="userData.email" id="inputEmail" name="inputEmail"
+               placeholder="Email address" required autofocus v-validate="'required|email'"
+               :class="{'input': true, 'is-invalid': validationErrors.has('inputEmail') }">
+        <div class="invalid-feedback">{{ validationErrors.first('inputEmail') }}</div>
       </div>
 
       <div class="form-group">
@@ -24,7 +26,8 @@
       </div>
 
       <div class="form-group">
-        <button class="btn btn-bold btn-block btn-primary" type="submit" @click.prevent="onSubmit">
+        <button class="btn btn-bold btn-block btn-primary" type="submit" @click.prevent="onSubmit"
+                :disabled="isFormInvalid">
           Login
         </button>
       </div>
@@ -52,6 +55,11 @@ export default {
         // remember: []
       },
       isSubmitted: false
+    }
+  },
+  computed: {
+    isFormInvalid () {
+      return Object.keys(this.fields).some(key => this.fields[key].invalid)
     }
   },
   methods: {

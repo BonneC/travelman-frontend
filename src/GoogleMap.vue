@@ -249,7 +249,6 @@ export default {
     })
 
     this.changeMapHeight()
-
   },
   methods: {
     ...mapActions([
