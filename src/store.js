@@ -28,8 +28,6 @@ export const store = new Vuex.Store({
       state.isLogged = true
     },
     clearAuthData (state) {
-      // state.idToken = null
-      // state.userId = null
       state.locations = null
       state.isLogged = null
       state.userInfo = null
@@ -127,7 +125,12 @@ export const store = new Vuex.Store({
     },
     fetchLocations ({commit, state}) {
       return new Promise((resolve) => {
-        axios.get('http://127.0.0.1:8000/' + localStorage.userId + '/locations')
+        axios.get('http://127.0.0.1:8000/' + localStorage.userId + '/locations', {
+          headers: {
+            Accept: 'application/json',
+            Authorization: 'Bearer ' + localStorage.getItem('idToken')
+          }
+        })
           .then((response) => {
             commit('setLocations', {locs: response.data})
             resolve()
@@ -137,7 +140,12 @@ export const store = new Vuex.Store({
     },
     addLocation ({state, dispatch}, location) {
       return new Promise((resolve) => {
-        axios.post('http://127.0.0.1:8000/' + localStorage.userId + '/locations', location)
+        axios.post('http://127.0.0.1:8000/' + localStorage.userId + '/locations', location, {
+          headers: {
+            Accept: 'application/json',
+            Authorization: 'Bearer ' + localStorage.getItem('idToken')
+          }
+        })
           .then((response) => {
             console.log(response)
             dispatch('fetchLocations')
@@ -147,7 +155,12 @@ export const store = new Vuex.Store({
     },
     deleteLocation ({commit, state}, locationId) {
       return new Promise((resolve) => {
-        axios.delete('http://127.0.0.1:8000/' + localStorage.userId + '/locations/' + locationId)
+        axios.delete('http://127.0.0.1:8000/' + localStorage.userId + '/locations/' + locationId, {
+          headers: {
+            Accept: 'application/json',
+            Authorization: 'Bearer ' + localStorage.getItem('idToken')
+          }
+        })
           .then((response) => {
             console.log(response)
             commit('removeLocation', {id: locationId})
@@ -157,7 +170,12 @@ export const store = new Vuex.Store({
     },
     updateLocation ({commit, state, dispatch}, locationData) {
       return new Promise((resolve) => {
-        axios.put('http://127.0.0.1:8000/' + localStorage.userId + '/locations/' + locationData.id, locationData)
+        axios.put('http://127.0.0.1:8000/' + localStorage.userId + '/locations/' + locationData.id, locationData, {
+          headers: {
+            Accept: 'application/json',
+            Authorization: 'Bearer ' + localStorage.getItem('idToken')
+          }
+        })
           .then((response) => {
             dispatch('fetchLocations')
             console.log(response)

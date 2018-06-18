@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import store from './store'
+import {store} from './store.js'
 import Home from './Home'
 import UserSignup from './users/UserSignup'
 import UserProfile from './users/UserProfile'
