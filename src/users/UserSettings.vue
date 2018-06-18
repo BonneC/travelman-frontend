@@ -32,14 +32,15 @@
                   <div v-if="!change_pass" class="form-group">
                     <label class="col-sm-2 control-label" for="first_name">First Name</label>
                     <div class="col-sm-10">
-                      <input v-model="first_name" class="form-control" name="disabledInput" id="first_name" type="text"
+                      <input v-model="first_name" class="form-control" name="disabledInput" id="first_name"
+                             type="text"
                              disabled>
                     </div>
                   </div>
                   <div v-if="!change_pass" class="form-group">
                     <label class="col-sm-2 control-label" for="last_name">Last Name</label>
                     <div class="col-sm-10">
-                      <input v-model="this.last_name" class="form-control" name="disabledInput" id="last_name"
+                      <input v-model="last_name" class="form-control" name="disabledInput" id="last_name"
                              type="text"
                              disabled>
                     </div>
@@ -185,6 +186,7 @@ export default {
           email: this.email
 
         }
+        this.disableEdit()
       }
       this.updateUser(userData).catch(function (error) {
         console.error(error)
