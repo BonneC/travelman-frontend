@@ -20,23 +20,34 @@
     </div>
 
     <modal name="save-location">
-      <form class="form container-fluid">
-        <h3>Location: {{address}}</h3>
-        <div class="row">
-          <div class="col-sm-12">
-            <label><input type="radio" name="completed" v-model="completed" value="0" checked="checked">
-              I want to go here</label>
+      <div class="col-md-12">
+        <div class="card">
+          <h4 class="card-title">Location: <strong>{{address}}</strong></h4>
+
+          <div class="card-body">
+            <form class="form container-fluid">
+              <div class="col-md-12">
+                <div class="col-sm-12">
+                  <label><input type="radio" name="completed" v-model="completed" value="0" checked="checked">
+                    I want to go here</label>
+                </div>
+                <div class="col-sm-12">
+                  <label><input type="radio" name="completed" v-model="completed" value="1"> I've been here</label>
+                </div>
+                <hr>
+                <div class="col-sm-12">
+                </div>
+              </div>
+            </form>
           </div>
-          <div class="col-sm-12">
-            <label><input type="radio" name="completed" v-model="completed" value="1"> I've been here</label>
-          </div>
-          <div class="col-sm-12">
+          <footer class="card-footer">
             <button class="btn btn-primary" type="submit" @click.prevent="onSubmit">
               Save Location
             </button>
-          </div>
+          </footer>
         </div>
-      </form>
+      </div>
+
     </modal>
 
     <div class="alert alert-warning alert-dismissible fade invalid-location"
@@ -121,9 +132,10 @@ export default {
           completed: this.completed
         }
 
+        this.hide()
+
         this.addLocation(location)
           .then((response) => {
-            this.hide()
             this.completed = 0
 
             this.$emit('showAlert', 'Succesffuly added ' + location.address)

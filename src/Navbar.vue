@@ -48,7 +48,7 @@
       <div class="topbar-right">
         <nav class="topbar-navigation">
           <ul class="menu">
-            <li v-if="auth" class="menu-item active open">
+            <li v-if="auth" class="menu-item open">
               <router-link to="/" class="menu-link">
                 <span class="icon ti-home"></span>
                 <span class="title">Home</span>
@@ -108,6 +108,9 @@ export default {
     },
     userInfo () {
       return this.$store.getters.getUserInfo
+    },
+    activeRoute () {
+      return this.$router.currentRoute
     }
   },
   methods: {
