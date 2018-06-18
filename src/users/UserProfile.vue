@@ -5,7 +5,7 @@
         <div class="card-body">
           <div class="col-md-3">
             <div class="card">
-              <div class=" card-body bg-img text-center py-50">
+              <div class=" card-body bg-img text-center pt-50 pb-10">
                 <div class="avatar-holder">
                   <div class="avatar-hover" @click="editAvatar()"><i class="fa fa-edit"></i><span>Edit</span></div>
                   <div class="avatar avatar-xxl avatar-bordered">
@@ -19,6 +19,11 @@
                   </span>
                 </h5>
                 <span>{{ userinfo.email }}</span>
+
+                <router-link to="/settings" class="btn btn-w-xs btn-sm btn-info btn-label mt-20">
+                  <label><i class="ti-pencil"></i></label>
+                  Edit
+                </router-link>
               </div>
               <ul class="flexbox flex-justified text-center p-20">
                 <li class="br-1 border-light">
